@@ -1,0 +1,20 @@
+@font-face {
+    font-family: 'ArnoProSemiboldDisplay';
+    src: local('Arno Pro Semibold Display.ttf');
+    src: url('../../fonts/Arno Pro Semibold Display.ttf') format('truetype');
+}
+ul{margin: 0px;padding: 0px;}
+li{list-style:none;}
+.fleet_tab{overflow:hidden;}
+.fleet_tab li{background:#ccc; padding:5px 0px 5px; float:left; margin:0px 0.15% 0px; width: 24.7%; text-align: center;}
+.fleet_tab li.select{background:#eee;}
+.fleet_content li{background:#eee; padding:10px; width:644px; height: 766.5px; }
+.hide {display:none;}
+#orgImg1 {margin:auto;}
+#orgImg2 {margin:auto;}
+#orgImg3 {margin:auto;}
+#orgImg4 {margin:auto;}
+.ship_tab{overflow:hidden;}
+.ship_tab li{background:#ccc; padding:5px 0px 5px; float:left; margin:0px 0.15% 0px; width: 24.7%; text-align: center;}
+.ship_tab li.select{background:#eee;}
+.ship_content li{background:#eee; padding:10px; width:644px; height: 766.5px; }

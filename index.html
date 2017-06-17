@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+  <head>
+    <title>デッキミルダー</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <!--[if IE]><script type="text/javascript" src="https://raw.githubusercontent.com/arv/ExplorerCanvas/master/excanvas.js"></script><![endif]-->
+    <script src="js/process.js"></script>
+    <script src="js/parameters.js"></script>
+    <script src="js/draw.js"></script>
+  </head>
+  <body>
+    <table border="1">
+        <tr>
+            <td colspan="2">
+                デッキビルダーから反映:
+                <input type="text" id="parseDeckFormatLabel" title="艦隊シミュレーター＆デッキビルダーで排出されたフォーマットをここに入力して、反映ボタンをクリックするとこの画面に反映されます。">
+                <input type="button" value="反映" onclick="setPresetDeck()">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul class="fleet_tab">
+                    <li id="fleetTab1" class="select"><img src="./img/OrganizeMain[143].png"></img></li>
+                    <li id="fleetTab2"><img src="./img/OrganizeMain[139].png"></img></li>
+                    <li id="fleetTab3"><img src="./img/OrganizeMain[140].png"></img></li>
+                    <li id="fleetTab4"><img src="./img/OrganizeMain[141].png"></img></li>
+                </ul>
+                <ul class="fleet_content">
+                    <li><img id="orgImg1"></img></li>
+                    <li class="hide"><img id="orgImg2"></img></li>
+                    <li class="hide"><img id="orgImg3"></img></li>
+                    <li class="hide"><img id="orgImg4"></img></li>
+                </ul>
+            </td>
+            <td>
+                <!--status
+                <ul class="ship_tab">
+                    <li id="ships" class="select"><img src="./img/OrganizeMain[143].png"></img></li>
+                    <li id="ship1"><img src="./img/250.png"></img></li>
+                    <li id="ship2"><img src="./img/252.png"></img></li>
+                    <li id="ship3"><img src="./img/254.png"></img></li>
+                    <li id="ship4"><img src="./img/256.png"></img></li>
+                    <li id="ship5"><img src="./img/258.png"></img></li>
+                    <li id="ship6"><img src="./img/260.png"></img></li>
+                </ul>
+                <ul class="ship_content">
+                    <li>a</li>
+                    <li class="hide">b</li>
+                    <li class="hide">c</li>
+                    <li class="hide">d</li>
+                    <li class="hide">e</li>
+                    <li class="hide">f</li>
+                    <li class="hide">g</li>-->
+                </ul>
+            </td>
+        </tr>
+    </table>
+  </body>
+<html>
