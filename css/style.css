@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'ArnoProSemiboldDisplay';
     src: local('Arno Pro Semibold Display.ttf');
-    src: url('../../fonts/Arno Pro Semibold Display.ttf') format('truetype');
+    src: url('../../fonts/ArnoProSemiboldDisplay.ttf') format('truetype');
 }
 ul{margin: 0px;padding: 0px;}
 li{list-style:none;}
