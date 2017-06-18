@@ -49,7 +49,7 @@ function loadPredeck(str){
     if(param != ""){
         let predeck = parseDeckFormat(param);
         for(let i = 4;i > 0;i--){
-            if(predeck[i] !== undefined){
+            if(predeck[i] != null && Object.keys(predeck[i]).length > 0){
                 $("#orgImg" + i).attr("width",32);
                 $("#orgImg" + i).attr("src","./img/ajax-loader.gif");
                 dispOrganizationImage(i,predeck[i]);
@@ -91,11 +91,11 @@ function parseDeckFormat(str){
     if(object['version'] == 4){
         for(let i = 1;i <= 4;i++){
             let fleet = object['f' + i];
-            if(fleet === undefined) continue;
+            if(fleet == null) continue;
             param[i] = {};
             for(let j = 1;j <= 6;j++){
                 let ship = fleet['s' + j];
-                if(ship === undefined) continue;
+                if(ship == null) continue;
                 param[i][j] = {};
                 let shipid = ship['id'];
                 let shiplv = ship['lv'];
@@ -104,14 +104,14 @@ function parseDeckFormat(str){
                 let _items = {};
                 for(let k = 1;k <= 4;k++){
                     let item = items['i' + k];
-                    if(item === undefined) continue;
+                    if(item == null) continue;
                     let itemid = item['id'];
                     let lv = item['rf'];
                     let alv = item['mas'];
                     _items[k] = (new ItemDto(itemid,lv,alv));
                 }
                 let item = items['ix'];
-                if(item !== undefined){
+                if(item != null){
                     let itemid = item['id'];
                     let lv = item['rf'];
                     let alv = item['mas'];
