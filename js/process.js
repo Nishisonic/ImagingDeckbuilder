@@ -97,24 +97,24 @@ function parseDeckFormat(str){
                 let ship = fleet['s' + j];
                 if(ship == null) continue;
                 param[i][j] = {};
-                let shipid = ship['id'];
-                let shiplv = ship['lv'];
-                let shipluck = ship['luck'];
+                let shipid = parseInt(ship['id']);
+                let shiplv = parseInt(ship['lv']);
+                let shipluck = parseInt(ship['luck']);
                 let items = ship['items'];
                 let _items = {};
                 for(let k = 1;k <= 4;k++){
                     let item = items['i' + k];
                     if(item == null) continue;
-                    let itemid = item['id'];
-                    let lv = item['rf'];
-                    let alv = item['mas'];
+                    let itemid = parseInt(item['id']);
+                    let lv = parseInt(item['rf']);
+                    let alv = parseInt(item['mas']);
                     _items[k] = (new ItemDto(itemid,lv,alv));
                 }
                 let item = items['ix'];
                 if(item != null){
-                    let itemid = item['id'];
-                    let lv = item['rf'];
-                    let alv = item['mas'];
+                    let itemid = parseInt(item['id']);
+                    let lv = parseInt(item['rf']);
+                    let alv = parseInt(item['mas']);
                     _items[5] = (new ItemDto(itemid,lv,alv));
                 }
                 param[i][j].ship = new ShipDto(shipid,shiplv,_items,shipluck);
