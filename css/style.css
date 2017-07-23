@@ -1,8 +1,8 @@
 @font-face {
     font-family: 'ArnoProSemiboldDisplay';
     src: local('Arno Pro Semibold Display.ttf');
-    src: url('../fonts/ArnoProSemiboldDisplay.ttf') format('truetype');
-    src: url('../../fonts/ArnoProSemiboldDisplay.ttf') format('truetype'); /*ローカルテスト用*/
+    src: url('../fonts/ArnoProSemiboldDisplay.ttf') format('truetype'),
+         url('../../fonts/ArnoProSemiboldDisplay.ttf') format('truetype'); /*ローカルテスト用*/
 }
 /* Bootstrap3.3.1 */
 @font-face {
