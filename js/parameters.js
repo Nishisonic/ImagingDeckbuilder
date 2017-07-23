@@ -185,7 +185,7 @@ function ShipDto(id,lv,items,luck){
                         a.set(param,getNowLvStatus(id,lv,param) + sum);
                         break;
                     case "luck": // 運
-                        a.set(param,a.get(param) + sum);
+                        a.set(param,a.get(param));
                         break;
                     case "soku": // 速力
                     case "leng": // 射程

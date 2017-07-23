@@ -120,6 +120,8 @@ function parseDeckFormat(str){
                 let shipid = parseInt(ship['id']);
                 let shiplv = parseInt(ship['lv']);
                 let shipluck = parseInt(ship['luck']);
+                // 初期運が-1の設定がなされている場合があるため
+                shipluck = shipluck === -1 ? getShipParam(shipid).luck : shipluck;
                 let items = ship['items'];
                 let _items = {};
                 for(let k = 1;k <= 4;k++){
