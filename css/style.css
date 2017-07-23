@@ -1,21 +1,256 @@
 @font-face {
     font-family: 'ArnoProSemiboldDisplay';
     src: local('Arno Pro Semibold Display.ttf');
-    src: url('../fonts/ArnoProSemiboldDisplay.ttf') format('truetype'),
-            url('../../fonts/ArnoProSemiboldDisplay.ttf') format('truetype'); /*ローカルテスト用*/
+    src: url('../fonts/ArnoProSemiboldDisplay.ttf') format('truetype');
+    src: url('../../fonts/ArnoProSemiboldDisplay.ttf') format('truetype'); /*ローカルテスト用*/
 }
+/* Bootstrap3.3.1 */
+@font-face {
+  font-family: 'Glyphicons Halflings';
+
+  src: url('../fonts/glyphicons-halflings-regular.eot');
+  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+.glyphicon {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+/* */
+.flex {
+    display: -webkit-flex;
+    display: flex;
+    flex-wrap: wrap;
+}
+body {font-family: 'メイリオ';}
+.content{ background: #424246; width: 720px; height: 920px;}
+.sidebar{ background: #424246; width: 720px; height: 920px;}
+.fleet_tab_td{margin: 0px;padding: 0px;}
 ul{margin: 0px;padding: 0px;}
 li{list-style:none;}
-.fleet_tab{overflow:hidden;}
-.fleet_tab li{background:#ccc; padding:5px 0px 5px; float:left; margin:0px 0.15% 0px; width: 24.7%; text-align: center;}
-.fleet_tab li.select{background:#eee;}
-.fleet_content li{background:#eee; padding:10px; width:644px; height: 766.5px; }
+.fleet_tab{overflow:hidden;background:#ffffff;}
+.fleet_tab li{background:#424246; padding:5px 0px 5px; float:left; margin:0px 0.15% 0px; width: 24.77%; text-align: center; cursor: pointer;}
+.fleet_tab li:hover{background: #9E9EA2;}
+.fleet_tab li.select{background:#fafaff;}
+.fleet_content li{background:#fafaff; padding:10px; width:690px; height: 821.25px;}
 .hide {display:none;}
+#fleetTab1 {margin: 0% 0.15% 0% 0%}
+#fleetTab4 {margin: 0% 0% 0% 0.15%}
 #orgImg1 {margin:auto;}
 #orgImg2 {margin:auto;}
 #orgImg3 {margin:auto;}
 #orgImg4 {margin:auto;}
-.ship_tab{overflow:hidden;}
-.ship_tab li{background:#ccc; padding:5px 0px 5px; float:left; margin:0px 0.15% 0px; width: 24.7%; text-align: center;}
-.ship_tab li.select{background:#eee;}
-.ship_content li{background:#eee; padding:10px; width:644px; height: 766.5px; }
+.ship_tab{overflow:hidden; float:left; background:#fafaff;}
+.ship_tab li{background:#424246; padding:3px; margin:2.6% 0px; width: 60px; text-align: center; cursor: pointer; vertical-align: middle; height: 29.1px;}
+#ship1 {margin:0px 0px 2.6%;}
+#ship6 {margin:2.6% 0px 0px;}
+.ship_tab li:hover{background:#9E9EA2;}
+.ship_tab li.select{background:#fafaff;}
+.ship_content{float:left; margin-left: auto;}
+.ship_content li{background:#fafaff; height: 219px; width: 643px;}
+.fleet_detail {background: #424246; vertical-align: middle; color: #fafaff;}
+/*.fleet_table_detail {margin-top: 5px;}*/
+.fleet_table_detail td {padding-right: 10px; height: 30px;}
+.fleet_table_detail img {display:inline-block; vertical-align:middle; height: 28px;}
+.td_num_value {width: 90px; padding-right: 10px; text-align: right;}
+.td_num_value2 {width: 100px; padding-right: 10px; text-align: right;}
+.fleet_name {white-space: nowrap;}
+.fleet_name_label {font-size:22px; font-weight: bold;}
+.capacity_img {padding: 2px;}
+#fuel_img {width: auto; height: auto;}
+#ammo_img {width: auto; height: auto;}
+#bauxite_img {width: auto; height: auto; padding-left: 4px;}
+#lv_img {width: auto; height: auto; padding: 0px 1px 0px 4px;}
+.pencil {cursor: pointer; font-size: 8px;}
+.num_value {font-size: 18px; font-family: 'ArnoProSemiboldDisplay'; text-align: right;}
+.deck_reflection_label {color:#1DBDC0;}
+.table_tab{overflow:hidden;background:#ffffff;}
+.table_tab li{background:#424246; padding:5px 0px 5px; float:left; margin:0px 0.15% 0px; width: 16.41%; text-align: center; cursor: pointer; color:#ffffff; font:bold;}
+#tableTab1 {margin: 0% 0.15% 0% 0%}
+#tableTab6 {margin: 0% 0% 0% 0.15%}
+.table_tab li:hover{background:#9e9ea2;}
+.table_tab li.select{background:#fafaff; color:#000000;}
+.table_content li{background:#fafaff; padding:10px; width:690px; height:235px;}
+.table_content td{font-size: 13.5px; text-align: center;}
+.table_content th{font-size: 13.5px; text-align: center;}
+#setting_row{height: 30px; color: #ffffff; text-align: center; margin-top: 10px;}
+.table_name{width: 80px; height: 20px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;}
+.table_air_power{width: 57px; text-align: center;}
+.table_day_battle{width: 52px; text-align: center;}
+.table_night_battle{width: 60px; text-align: center;}
+.night_recon_persent{font-size: 16px; text-align: left;}
+.table_anti_aircraft{width: 70px; text-align: center;}
+.anti_aircraft_cutin{width: 200px; text-align: center;}
+#anti_aircraft_table{margin-top: 5px;}
+.table_spotting{width:65px; text-align: right;}
+.table_space{padding-left: 4px;}
+/* */
+.sample-box-13 {
+    background-color: #fafaff;
+    border: 2px solid #444;
+    border-radius: 4px;
+    margin: 1em 1em 1.5em 0;
+    padding: 1.5em 1em 1em 1em;
+    position: relative;
+}
+.sample-box-13::before {
+    background-color: #fafaff;
+    color: #444;
+    content: "夜戦装備";
+    font-weight: bold;
+    left: 1em;
+    padding: 0 .5em;
+    position: absolute;
+    top: -1em;
+}
+/* https://www.m-field.biz/archives/3200 */
+.checkbox04-parts{
+  position: relative;
+  padding: 5px 20px 5px 53px;
+  margin-bottom: 1.5em;
+  transition:.3s;
+  color: #444;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  display:inline-block;
+  cursor: pointer;
+}
+.checkbox04-parts::before{
+  content: "";
+  display: block;
+  position: absolute;
+  top: 9px;
+  left: 9px;
+  width: 30px;
+  height: 15px;
+  border-radius: 15px;
+  border: 1px solid #aaa;
+  background: #fff;
+  display: block;
+}
+.checkbox04-parts::after{
+  content: "";
+  display: block;
+  position: absolute;
+  top: 11px;
+  left: 11px;
+  width: 13px;
+  height: 13px;
+  background: #aaa;
+  border-radius: 50%;
+  transition:.2s;
+  display: block;
+}
+#night_recon:checked + .checkbox04-parts::before {
+  border: 1px solid #2DAD38;
+}
+#night_recon:checked + .checkbox04-parts::after {
+  left: 26px;
+  background: #2DAD38;
+}
+#night_recon:checked + .checkbox04-parts{
+  background: #2DAD38;
+  color: #fff;
+  border: 1px solid #2DAD38;
+}
+#searchlight:checked + .checkbox04-parts::before {
+  border: 1px solid #E3672B;
+}
+#searchlight:checked + .checkbox04-parts::after {
+  left: 26px;
+  background: #E3672B;
+}
+#searchlight:checked + .checkbox04-parts{
+  background: #E3672B;
+  color: #fff;
+  border: 1px solid #E3672B;
+}
+#star_shell:checked + .checkbox04-parts::before {
+  border: 1px solid #FE992D;
+}
+#star_shell:checked + .checkbox04-parts::after {
+  left: 26px;
+  background: #FE992D;
+}
+#star_shell:checked + .checkbox04-parts{
+  background: #FE992D;
+  color: #fff;
+  border: 1px solid #FE992D;
+}
+.checkbox04-input{
+  display: none;
+  cursor: pointer;
+}
+/* */
+/* Loading... */
+.loader {
+  font-size: 10px;
+  margin: 50px auto;
+  text-indent: -9999em;
+  width: 11em;
+  height: 11em;
+  border-radius: 50%;
+  background: #c0c0c0;
+  background: -moz-linear-gradient(left, #c0c0c0 10%, rgba(192,192,192, 0) 42%);
+  background: -webkit-linear-gradient(left, #c0c0c0 10%, rgba(192,192,192, 0) 42%);
+  background: -o-linear-gradient(left, #c0c0c0 10%, rgba(192,192,192, 0) 42%);
+  background: -ms-linear-gradient(left, #c0c0c0 10%, rgba(192,192,192, 0) 42%);
+  background: linear-gradient(to right, #c0c0c0 10%, rgba(192,192,192, 0) 42%);
+  position: relative;
+  -webkit-animation: load3 1.4s infinite linear;
+  animation: load3 1.4s infinite linear;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  display: none;
+}
+.loader:before {
+  width: 50%;
+  height: 50%;
+  background: #c0c0c0;
+  border-radius: 100% 0 0 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '';
+}
+.loader:after {
+  background: #fafaff;
+  width: 75%;
+  height: 75%;
+  border-radius: 50%;
+  content: '';
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+@-webkit-keyframes load3 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load3 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}

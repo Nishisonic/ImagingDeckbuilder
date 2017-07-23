@@ -346,6 +346,7 @@ function dispOrganizationImage(fleetIdx,fleet){
     }
 
     function drawImg(canvas){
+        $("#loader" + fleetIdx).hide();
         $("#orgImg" + fleetIdx).attr("width",canvas.width == 460 ? "50%" : "100%");
         $("#orgImg" + fleetIdx).attr("src",canvas.toDataURL());
     }

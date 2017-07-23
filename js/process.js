@@ -38,6 +38,26 @@ $(function() {
         //クリックされたタブのみにクラスselectをつけます。
         $(this).addClass('select');
     });
+
+    //クリックしたときのファンクションをまとめて指定
+    $('.table_tab li').click(function() {
+
+        //.index()を使いクリックされたタブが何番目かを調べ、
+        //indexという変数に代入します。
+        var index = $('.table_tab li').index(this);
+
+        //コンテンツを一度すべて非表示にし、
+        $('.table_content li').css('display','none');
+
+        //クリックされたタブと同じ順番のコンテンツを表示します。
+        $('.table_content li').eq(index).css('display','block');
+
+        //一度タブについているクラスselectを消し、
+        $('.table_tab li').removeClass('select');
+
+        //クリックされたタブのみにクラスselectをつけます。
+        $(this).addClass('select');
+    });
 });
 
 function setPresetDeck(){
@@ -50,8 +70,8 @@ function loadPredeck(str){
         let predeck = parseDeckFormat(param);
         for(let i = 4;i > 0;i--){
             if(predeck[i] != null && Object.keys(predeck[i]).length > 0){
-                $("#orgImg" + i).attr("width",32);
-                $("#orgImg" + i).attr("src","./img/ajax-loader.gif");
+                $("#orgImg" + i).attr("src","");
+                $("#loader" + i).show();
                 dispOrganizationImage(i,predeck[i]);
             }else {
                 $("#orgImg" + i).attr("src","");

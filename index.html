@@ -6,57 +6,886 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
-    <!--[if IE]><script type="text/javascript" src="https://raw.githubusercontent.com/arv/ExplorerCanvas/master/excanvas.js"></script><![endif]-->
     <script src="js/process.js"></script>
     <script src="js/parameters.js"></script>
     <script src="js/draw.js"></script>
   </head>
   <body>
-    <table border="1">
-        <tr>
-            <td colspan="2">
-                デッキビルダーから反映:
-                <input type="text" id="parseDeckFormatLabel" title="艦隊シミュレーター＆デッキビルダーで排出されたフォーマットをここに入力して、反映ボタンをクリックするとこの画面に反映されます。">
-                <input type="button" value="反映" onclick="setPresetDeck()">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <ul class="fleet_tab">
-                    <li id="fleetTab1" class="select"><img src="./img/OrganizeMain[143].png"></img></li>
-                    <li id="fleetTab2"><img src="./img/OrganizeMain[139].png"></img></li>
-                    <li id="fleetTab3"><img src="./img/OrganizeMain[140].png"></img></li>
-                    <li id="fleetTab4"><img src="./img/OrganizeMain[141].png"></img></li>
-                </ul>
-                <ul class="fleet_content">
-                    <li><img id="orgImg1"></img></li>
-                    <li class="hide"><img id="orgImg2"></img></li>
-                    <li class="hide"><img id="orgImg3"></img></li>
-                    <li class="hide"><img id="orgImg4"></img></li>
-                </ul>
-            </td>
-            <td>
-                <!--status
-                <ul class="ship_tab">
-                    <li id="ships" class="select"><img src="./img/OrganizeMain[143].png"></img></li>
-                    <li id="ship1"><img src="./img/250.png"></img></li>
-                    <li id="ship2"><img src="./img/252.png"></img></li>
-                    <li id="ship3"><img src="./img/254.png"></img></li>
-                    <li id="ship4"><img src="./img/256.png"></img></li>
-                    <li id="ship5"><img src="./img/258.png"></img></li>
-                    <li id="ship6"><img src="./img/260.png"></img></li>
-                </ul>
-                <ul class="ship_content">
-                    <li>a</li>
-                    <li class="hide">b</li>
-                    <li class="hide">c</li>
-                    <li class="hide">d</li>
-                    <li class="hide">e</li>
-                    <li class="hide">f</li>
-                    <li class="hide">g</li>-->
-                </ul>
-            </td>
-        </tr>
-    </table>
+    <div class="flex">
+        <table border="1" class="content">
+            <tr>
+                <td colspan="2">
+                    <label class="deck_reflection_label">デッキビルダーから反映:</label>
+                    <input type="text" id="parseDeckFormatLabel" title="艦隊シミュレーター＆デッキビルダーで排出されたフォーマットをここに入力して、反映ボタンをクリックするとこの画面に反映されます。">
+                    <input type="button" value="反映" onclick="setPresetDeck()">
+                </td>
+            </tr>
+            <tr>
+                <td class="fleet_tab_td">
+                    <ul class="fleet_tab">
+                        <li id="fleetTab1" class="select"><img src="./img/OrganizeMain[143].png"></img></li>
+                        <li id="fleetTab2"><img src="./img/OrganizeMain[139].png"></img></li>
+                        <li id="fleetTab3"><img src="./img/OrganizeMain[140].png"></img></li>
+                        <li id="fleetTab4"><img src="./img/OrganizeMain[141].png"></img></li>
+                    </ul>
+                    <ul class="fleet_content">
+                        <li><div id="loader1" class="loader">Loading...</div><img id="orgImg1"></img></li>
+                        <li class="hide"><div id="loader2" class="loader">Loading...</div><img id="orgImg2"></img></li>
+                        <li class="hide"><div id="loader3" class="loader">Loading...</div><img id="orgImg3"></img></li>
+                        <li class="hide"><div id="loader4" class="loader">Loading...</div><img id="orgImg4"></img></li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+        <table border="1" class="sidebar">
+            <tr>
+                <td class="fleet_detail">
+                    <div class="fleet_name">
+                        <img id="fleet_icon" src="./img/OrganizeMain[143].png"></img>
+                        <label class="fleet_name_label">第一艦隊</label>
+                        <span class="glyphicon pencil">&#x270f;</span>
+                    </div>
+                    <label class="fleet_comment">Comment</label>
+                    <input type="text">
+                </td>
+            </tr>
+            <tr>
+                <td id="setting_row">
+                    戦闘形式:
+                    <select>
+                        <option>自軍:通常vs.敵軍:通常</option>
+                        <option>自軍:水上vs.敵軍:通常</option>
+                        <option>自軍:機動vs.敵軍:通常</option>
+                        <option>自軍:輸送vs.敵軍:通常</option>
+                        <option>自軍:通常vs.敵軍:連合</option>
+                        <option>自軍:水上vs.敵軍:連合</option>
+                        <option>自軍:機動vs.敵軍:連合</option>
+                        <option>自軍:輸送vs.敵軍:連合</option>
+                    </select>
+                    <span style="margin-left:12px;">陣形:</span>
+                    <select name="formationSelect">
+                        <option value="formation1">単縦陣</option>
+                        <option value="formation2">複縦陣</option>
+                        <option value="formation3">輪形陣</option>
+                        <option value="formation4">梯形陣</option>
+                        <option value="formation5">単横陣</option>
+                        <!--<option value="formation11">第一警戒</option>
+                        <option value="formation12">第二警戒</option>
+                        <option value="formation13">第三警戒</option>
+                        <option value="formation14">第四警戒</option>-->
+                    </select>
+                    <span style="margin-left:12px;">交戦形態:</span>
+                    <select>
+                        <option>T字有利</option>
+                        <option>同航戦</option>
+                        <option>反航戦</option>
+                        <option>T字不利</option>
+                    </select>
+                    <span style="margin-left:12px;">状態:</span>
+                    <select>
+                        <option>中破未満</option>
+                        <option>中破</option>
+                        <option>大破</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <li class="fleet_detail">
+                        <table border="1" class="fleet_table_detail">
+                            <tr>
+                                <td colspan="2">
+                                    <img src="./img/102.png"></img>
+                                    制空値
+                                </td>
+                                <td class="td_num_value">
+                                    <label class="num_value">340</label>
+                                </td>
+                                <td colspan="2">
+                                    <img src="./img/108.png"></img>
+                                    索敵計算[分岐点係数:
+                                    <input type="number" value="1" style="width:30px;">
+                                    ]
+                                </td>
+                                <td class="td_num_value2">
+                                    <label class="num_value">32.15</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2">
+                                    <img src="./img/140.png"></img>
+                                    TP値
+                                </td>
+                                <td class="table_space">
+                                    S勝利時
+                                </td>
+                                <td class="td_num_value">
+                                    <label class="num_value">108</label>
+                                </td>
+                                <td colspan="2">
+                                    <img src="./img/120.png"></img>
+                                    艦隊防空[陣形:<span id="formation">単縦陣</span>]
+                                </td>
+                                <td class="td_num_value2">
+                                    <label class="num_value">60.3</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="table_space">
+                                    A勝利時
+                                </td>
+                                <td class="td_num_value">
+                                    <label class="num_value">72</label>
+                                </td>
+                                <td colspan="2">
+                                    <img src="./img/130.png"></img>
+                                    遠征効率
+                                </td>
+                                <td class="td_num_value2">
+                                    +
+                                    <label class="num_value">21.1</label>
+                                    %
+                                </td>
+                            </tr>
+                            <tr>
+                                <td rowspan="3">
+                                    <img src="./img/110.png"></img>
+                                    触接開始率
+                                </td>
+                                <td class="table_space">
+                                    制空権確保
+                                </td>
+                                <td class="td_num_value">
+                                    <label class="num_value">89</label>
+                                    %
+                                </td>
+                                <td rowspan="3">
+                                    <img src="./img/106.png"></img>
+                                    触接選択率
+                                </td>
+                                <td class="table_space">
+                                    x1.2
+                                </td>
+                                <td class="td_num_value2">
+                                    <label class="num_value">80</label>
+                                    %
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="table_space">
+                                    航空優勢
+                                </td>
+                                <td class="td_num_value">
+                                    <label class="num_value">64</label>
+                                    %
+                                </td>
+                                <td class="table_space">
+                                    x1.17
+                                </td>
+                                <td class="td_num_value2">
+                                    <label class="num_value">60</label>
+                                    %
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="table_space">
+                                    航空劣勢
+                                </td>
+                                <td class="td_num_value">
+                                    <label class="num_value">32</label>
+                                    %
+                                </td>
+                                <td class="table_space">
+                                    x1.12
+                                </td>
+                                <td class="td_num_value2">
+                                    <label class="num_value">40</label>
+                                    %
+                                </td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2">
+                                    <span class="capacity_img">
+                                        <img id="fuel_img" src="./img/PortMain[105].png"></img>
+                                        <br>
+                                        <img id="ammo_img" src="./img/PortMain[104].png"></img>
+                                    </span>
+                                    <label>積載量</label>
+                                </td>
+                                <td class="table_space">
+                                    総積載
+                                </td>
+                                <td class="td_num_value">
+                                    <label class="num_value">500</label>
+                                    /
+                                    <label class="num_value">3000</label>
+                                </td>
+                                <td colspan="2">
+                                    <img id="bauxite_img" src="./img/PortMain[102].png"></img>
+                                    総搭載機数(ボーキ量)
+                                </td>
+                                <td class="td_num_value2">
+                                    <label class="num_value">250</label>
+                                    (
+                                    <label class="num_value">500</label>
+                                    )
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    一戦当たり
+                                </td>
+                                <td class="td_num_value">
+                                    <label class="num_value">250</label>
+                                    /
+                                    <label class="num_value">300</label>
+                                </td>
+                                <td colspan="2">
+                                    <img id="lv_img" src="./img/PortMain[89].png"></img>
+                                    合計Lv.(平均Lv.)
+                                </td>
+                                <td class="td_num_value2">
+                                    <label class="num_value">823</label>
+                                    (
+                                    <label class="num_value">123.5</label>
+                                    )
+                                </td>
+                            </tr>
+                        </table>
+                    </li>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <ul class="table_tab">
+                        <li id="tableTab1" class="select">航空戦</li>
+                        <li id="tableTab2">砲雷撃戦</li>
+                        <li id="tableTab3">夜戦</li>
+                        <li id="tableTab4">対空砲火</li>
+                        <li id="tableTab5">弾着率</li>
+                        <li id="tableTab6">命中/回避</li>
+                    </ul>
+                    <ul class="table_content">
+                        <li>
+                            <table id="air_battle_table" border="1">
+                                <tr>
+                                    <th rowspan="2">艦名</th>
+                                    <th rowspan="2">制空値</th>
+                                    <th rowspan="2">熟練度<br>倍率</th>
+                                    <th colspan="8">
+                                        航空戦威力[触接倍率:
+                                        <select>
+                                            <option>x1.0</option>
+                                            <option>x1.12</option>
+                                            <option>x1.17</option>
+                                            <option>x1.2</option>
+                                        </select>
+                                        ]
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>第一スロ</th>
+                                    <th>急所時</th>
+                                    <th>第二スロ</th>
+                                    <th>急所時</th>
+                                    <th>第三スロ</th>
+                                    <th>急所時</th>
+                                    <th>第四スロ</th>
+                                    <th>急所時</th>
+                                </tr>
+                                <tr>
+                                    <td class="table_name"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                </tr>
+                                <tr>
+                                    <td class="table_name"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                </tr>
+                                <tr>
+                                    <td class="table_name"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                </tr>
+                                <tr>
+                                    <td class="table_name"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                </tr>
+                                <tr>
+                                    <td class="table_name"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                </tr>
+                                <tr>
+                                    <td class="table_name"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                    <td class="table_air_power"></td>
+                                </tr>
+                            </table>
+                            <div>熟練度倍率は最低倍率に設定しています(そのため多少誤差が出ます)</div>
+                        </li>
+                        <li class="hide">
+                            <table id="day_battle_table" border="1">
+                                <tr>
+                                    <th rowspan="3">艦名</th>
+                                    <th colspan="7">砲撃戦</th>
+                                    <th rowspan="2">雷撃戦</th>
+                                    <th rowspan="2" colspan="3">対潜</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="2">通常</th>
+                                    <th colspan="5">弾着</th>
+                                </tr>
+                                <tr>
+                                    <th>威力</th>
+                                    <th>急所持</th>
+                                    <th>主砲</th>
+                                    <th>徹甲弾</th>
+                                    <th>電探</th>
+                                    <th>副砲</th>
+                                    <th>連撃</th>
+                                    <th>威力</th>
+                                    <th>表示</th>
+                                    <th>威力</th>
+                                    <th>急所持</th>
+                                </tr>
+                                <tr>
+                                    <td class="table_name"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                </tr>
+                                <tr>
+                                    <td class="table_name"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                </tr>
+                                <tr>
+                                    <td class="table_name"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                </tr>
+                                <tr>
+                                    <td class="table_name"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                </tr>
+                                <tr>
+                                    <td class="table_name"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                </tr>
+                                <tr>
+                                    <td class="table_name"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                    <td class="table_day_battle"></td>
+                                </tr>
+                            </table>
+                        </li>
+                        <li class="hide">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div class="sample-box-13">
+                                            <div><label><input id="night_recon" class="checkbox04-input" type="checkbox" /><span class="checkbox04-parts">夜偵</span></label></div>
+                                            <div><label><input id="searchlight" class="checkbox04-input" type="checkbox" /><span class="checkbox04-parts">探照灯</span></label></div>
+                                            <div><label><input id="star_shell" class="checkbox04-input" type="checkbox" /><span class="checkbox04-parts">照明弾</span></label></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <table id="night_battle_table" border="1">
+                                            <tr>
+                                                <th class="table_name">艦名</th>
+                                                <th>基本威力</th>
+                                                <th>攻撃形態</th>
+                                                <th>攻撃威力</th>
+                                                <th>発数</th>
+                                                <th>運</th>
+                                                <th>発動率</th>
+                                            </tr>
+                                            <tr>
+                                                <td class="table_name"></td>
+                                                <td class="table_night_battle"></td>
+                                                <td class="table_night_battle"></td>
+                                                <td class="table_night_battle"></td>
+                                                <td class="table_night_battle"></td>
+                                                <td class="table_night_battle"></td>
+                                                <td class="table_night_battle"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="table_name"></td>
+                                                <td class="table_night_battle"></td>
+                                                <td class="table_night_battle"></td>
+                                                <td class="table_night_battle"></td>
+                                                <td class="table_night_battle"></td>
+                                                <td class="table_night_battle"></td>
+                                                <td class="table_night_battle"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="table_name"></td>
+                                                <td class="table_night_battle"></td>
+                                                <td class="table_night_battle"></td>
+                                                <td class="table_night_battle"></td>
+                                                <td class="table_night_battle"></td>
+                                                <td class="table_night_battle"></td>
+                                                <td class="table_night_battle"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="table_name"></td>
+                                                <td class="table_night_battle"></td>
+                                                <td class="table_night_battle"></td>
+                                                <td class="table_night_battle"></td>
+                                                <td class="table_night_battle"></td>
+                                                <td class="table_night_battle"></td>
+                                                <td class="table_night_battle"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="table_name"></td>
+                                                <td class="table_night_battle"></td>
+                                                <td class="table_night_battle"></td>
+                                                <td class="table_night_battle"></td>
+                                                <td class="table_night_battle"></td>
+                                                <td class="table_night_battle"></td>
+                                                <td class="table_night_battle"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="table_name"></td>
+                                                <td class="table_night_battle"></td>
+                                                <td class="table_night_battle"></td>
+                                                <td class="table_night_battle"></td>
+                                                <td class="table_night_battle"></td>
+                                                <td class="table_night_battle"></td>
+                                                <td class="table_night_battle"></td>
+                                            </tr>
+                                        </table>
+                                        <div class="night_recon_persent">夜偵発動率:<span id="night_recon_persent">50</span>%</div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </li>
+                        <li class="hide">
+                            <div style="margin-left:8px;">
+                                対空カットイン:
+                                <select id="tyku_cutin">
+                                    <option value="0" selected>0:なし</option>
+                                    <option value="1">1:高角砲x2/電探(秋月型専用)</option>
+                                    <option value="2">2:高角砲/電探(秋月型専用)</option>
+                                    <option value="3">3:高角砲x2(秋月型専用)</option>
+                                    <option value="4">4:大口径主砲/三式弾/高射装置/電探</option>
+                                    <option value="5">5:高角砲+高射装置x2/電探</option>
+                                    <option value="6">6:大口径主砲/三式弾/高射装置</option>
+                                    <option value="7">7:高角砲/高射装置/電探</option>
+                                    <option value="8">8:高角砲+高射装置/電探</option>
+                                    <option value="9">9:高角砲/高射装置</option>
+                                    <option value="10">10:高角砲/集中機銃/電探(摩耶改二専用)</option>
+                                    <option value="11">11:高角砲/集中機銃(摩耶改二専用)</option>
+                                    <option value="12">12:集中機銃/機銃/電探</option>
+                                    <option value="13" disabled>13:高角砲/機銃/電探(摩耶改二不可)</option>
+                                    <option value="14">14:高角砲/機銃/電探(五十鈴改二専用)</option>
+                                    <option value="15">15:高角砲/機銃(五十鈴改二専用)</option>
+                                    <option value="16">16:高角砲/機銃/電探(霞改二乙専用)</option>
+                                    <option value="17">17:高角砲/機銃(霞改二乙専用)</option>
+                                    <option value="18">18:集中機銃(皐月改二専用)</option>
+                                    <option value="19">19:高角砲/集中機銃(鬼怒改二専用)</option>
+                                    <option value="20">20:集中機銃(鬼怒改二専用)</option>
+                                    <option value="21">21:高角砲/電探(由良改二専用)</option>
+                                </select>
+                            </div>
+                            <table id="anti_aircraft_table" border="1">
+                                <tr>
+                                    <th>艦名</th>
+                                    <th>素対空</th>
+                                    <th>加重対空</th>
+                                    <th>割合撃墜</th>
+                                    <th>固定撃墜</th>
+                                    <th>最終撃墜数</th>
+                                    <th>対空カットイン</th>
+                                </tr>
+                                <tr>
+                                    <td class="table_name"></td>
+                                    <td class="table_anti_aircraft"></td>
+                                    <td class="table_anti_aircraft"></td>
+                                    <td class="table_anti_aircraft"></td>
+                                    <td class="table_anti_aircraft"></td>
+                                    <td class="table_anti_aircraft"></td>
+                                    <td class="anti_aircraft_cutin">第18種(+2,x1.65)</td>
+                                </tr>
+                                <tr>
+                                    <td class="table_name"></td>
+                                    <td class="table_anti_aircraft"></td>
+                                    <td class="table_anti_aircraft"></td>
+                                    <td class="table_anti_aircraft"></td>
+                                    <td class="table_anti_aircraft"></td>
+                                    <td class="table_anti_aircraft"></td>
+                                    <td class="anti_aircraft_cutin"></td>
+                                </tr>
+                                <tr>
+                                    <td class="table_name"></td>
+                                    <td class="table_anti_aircraft"></td>
+                                    <td class="table_anti_aircraft"></td>
+                                    <td class="table_anti_aircraft"></td>
+                                    <td class="table_anti_aircraft"></td>
+                                    <td class="table_anti_aircraft"></td>
+                                    <td class="anti_aircraft_cutin"></td>
+                                </tr>
+                                <tr>
+                                    <td class="table_name"></td>
+                                    <td class="table_anti_aircraft"></td>
+                                    <td class="table_anti_aircraft"></td>
+                                    <td class="table_anti_aircraft"></td>
+                                    <td class="table_anti_aircraft"></td>
+                                    <td class="table_anti_aircraft"></td>
+                                    <td class="anti_aircraft_cutin"></td>
+                                </tr>
+                                <tr>
+                                    <td class="table_name"></td>
+                                    <td class="table_anti_aircraft"></td>
+                                    <td class="table_anti_aircraft"></td>
+                                    <td class="table_anti_aircraft"></td>
+                                    <td class="table_anti_aircraft"></td>
+                                    <td class="table_anti_aircraft"></td>
+                                    <td class="anti_aircraft_cutin"></td>
+                                </tr>
+                                <tr>
+                                    <td class="table_name"></td>
+                                    <td class="table_anti_aircraft"></td>
+                                    <td class="table_anti_aircraft"></td>
+                                    <td class="table_anti_aircraft"></td>
+                                    <td class="table_anti_aircraft"></td>
+                                    <td class="table_anti_aircraft"></td>
+                                    <td class="anti_aircraft_cutin"></td>
+                                </tr>
+                            </table>
+                        </li>
+                        <li class="hide">
+                            <div>
+                                <span style="margin-left:8px;">全体索敵補正:<span id="overall_search">0.00</span></span>
+                                <span style="float:right; margin-right:10px;">[優先度:主砲→徹甲弾→電探→副砲→連撃→通常]</span>
+                            </div>
+                            <table id="spotting_table" border="1">
+                                <tr>
+                                    <th rowspan="2">艦名</th>
+                                    <th colspan="8">制空状態:[]</th>
+                                </tr>
+                                <tr>
+                                    <th>素索敵</th>
+                                    <th>観測項</th>
+                                    <th>主砲</th>
+                                    <th>徹甲弾</th>
+                                    <th>電探</th>
+                                    <th>副砲</th>
+                                    <th>連撃</th>
+                                    <th>通常</th>
+                                </tr>
+                                <tr>
+                                    <td class="table_name"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                </tr>
+                                <tr>
+                                    <td class="table_name"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                </tr>
+                                <tr>
+                                    <td class="table_name"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                </tr>
+                                <tr>
+                                    <td class="table_name"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                </tr>
+                                <tr>
+                                    <td class="table_name"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                </tr>
+                                <tr>
+                                    <td class="table_name"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                </tr>
+                            </table>
+                        </li>
+                        <li class="hide">
+                            <table id="spotting_table" border="1">
+                                <tr>
+                                    <th rowspan="2">艦名</th>
+                                    <th colspan="6">制空権確保</th>
+                                    <th colspan="6">航空優勢</th>
+                                </tr>
+                                <tr>
+                                    <th>主砲</th>
+                                    <th>徹甲弾</th>
+                                    <th>電探</th>
+                                    <th>副砲</th>
+                                    <th>連撃</th>
+                                    <th>通常</th>
+                                    <th>主砲</th>
+                                    <th>徹甲弾</th>
+                                    <th>電探</th>
+                                    <th>副砲</th>
+                                    <th>連撃</th>
+                                    <th>通常</th>
+                                </tr>
+                                <tr>
+                                    <td class="table_name"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                </tr>
+                                <tr>
+                                    <td class="table_name"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                </tr>
+                                <tr>
+                                    <td class="table_name"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                </tr>
+                                <tr>
+                                    <td class="table_name"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                </tr>
+                                <tr>
+                                    <td class="table_name"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                </tr>
+                                <tr>
+                                    <td class="table_name"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                    <td class="table_spotting"></td>
+                                </tr>
+                            </table>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <ul class="ship_tab">
+                        <li id="ship1" class="select"><img src="./img/250.png"></img></li>
+                        <li id="ship2"><img src="./img/252.png"></img></li>
+                        <li id="ship3"><img src="./img/254.png"></img></li>
+                        <li id="ship4"><img src="./img/256.png"></img></li>
+                        <li id="ship5"><img src="./img/258.png"></img></li>
+                        <li id="ship6"><img src="./img/260.png"></img></li>
+                    </ul>
+                    <ul class="ship_content">
+                        <li>a</li>
+                        <li class="hide">b</li>
+                        <li class="hide">c</li>
+                        <li class="hide">d</li>
+                        <li class="hide">e</li>
+                        <li class="hide">f</li>
+                        <li class="hide">g</li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </div>
   </body>
 <html>
