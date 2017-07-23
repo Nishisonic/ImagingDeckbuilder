@@ -128,15 +128,21 @@ function parseDeckFormat(str){
                     let item = items['i' + k];
                     if(item == null) continue;
                     let itemid = parseInt(item['id']);
+                    if(Number.isNaN(itemid)) continue;
                     let lv = parseInt(item['rf']);
+                    lv = Number.isNaN(lv) ? 0 : lv;
                     let alv = parseInt(item['mas']);
+                    alv = Number.isNaN(alv) ? 0 : alv;
                     _items[k] = (new ItemDto(itemid,lv,alv));
                 }
                 let item = items['ix'];
                 if(item != null){
                     let itemid = parseInt(item['id']);
+                    if(Number.isNaN(itemid)) continue;
                     let lv = parseInt(item['rf']);
+                    lv = Number.isNaN(lv) ? 0 : lv;
                     let alv = parseInt(item['mas']);
+                    alv = Number.isNaN(alv) ? 0 : alv;
                     _items[5] = (new ItemDto(itemid,lv,alv));
                 }
                 param[i][j].ship = new ShipDto(shipid,shiplv,_items,shipluck);
