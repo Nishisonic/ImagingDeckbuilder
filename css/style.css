@@ -7,7 +7,6 @@
 /* Bootstrap3.3.1 */
 @font-face {
   font-family: 'Glyphicons Halflings';
-
   src: url('../fonts/glyphicons-halflings-regular.eot');
   src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
@@ -32,163 +31,115 @@
 body {font-family: 'メイリオ';}
 .content{ background: #424246; width: 720px; height: 920px;}
 .sidebar{ background: #424246; width: 720px; height: 920px;}
-.fleet_tab_td{margin: 0px;padding: 0px;}
 ul{margin: 0px;padding: 0px;}
 li{list-style:none;}
 .fleet_tab{overflow:hidden;background:#ffffff;}
 .fleet_tab li{background:#424246; padding:5px 0px 5px; float:left; margin:0px 0.15% 0px; width: 24.77%; text-align: center; cursor: pointer;}
 .fleet_tab li:hover{background: #9E9EA2;}
 .fleet_tab li.select{background:#fafaff;}
-.fleet_content li{background:#fafaff; padding:10px; width:690px; height: 821.25px;}
+.fleet_content li{background:#fafaff; padding:10px; width:692px; height: 821.25px;}
 .hide {display:none;}
+.deck_reflection_label {color:#1DBDC0;}
 #fleetTab1 {margin: 0% 0.15% 0% 0%}
 #fleetTab4 {margin: 0% 0% 0% 0.15%}
-#orgImg1 {margin:auto;}
-#orgImg2 {margin:auto;}
-#orgImg3 {margin:auto;}
-#orgImg4 {margin:auto;}
-.ship_tab{overflow:hidden; float:left; background:#fafaff;}
-.ship_tab li{background:#424246; padding:3px; margin:2.6% 0px; width: 60px; text-align: center; cursor: pointer; vertical-align: middle; height: 29.1px;}
-#ship1 {margin:0px 0px 2.6%;}
-#ship6 {margin:2.6% 0px 0px;}
-.ship_tab li:hover{background:#9E9EA2;}
-.ship_tab li.select{background:#fafaff;}
-.ship_content{float:left; margin-left: auto;}
-.ship_content li{background:#fafaff; height: 219px; width: 643px;}
-.fleet_detail {background: #424246; vertical-align: middle; color: #fafaff;}
-/*.fleet_table_detail {margin-top: 5px;}*/
-.fleet_table_detail td {padding-right: 10px; height: 30px;}
-.fleet_table_detail img {display:inline-block; vertical-align:middle; height: 28px;}
-.td_num_value {width: 90px; padding-right: 10px; text-align: right;}
-.td_num_value2 {width: 100px; padding-right: 10px; text-align: right;}
+.fleet_detail {background: #424246; vertical-align: middle; color: #fafaff; height: 70px;}
 .fleet_name {white-space: nowrap;}
 .fleet_name_label {font-size:22px; font-weight: bold;}
-.capacity_img {padding: 2px;}
-#fuel_img {width: auto; height: auto;}
-#ammo_img {width: auto; height: auto;}
-#bauxite_img {width: auto; height: auto; padding-left: 4px;}
-#lv_img {width: auto; height: auto; padding: 0px 1px 0px 4px;}
 .pencil {cursor: pointer; font-size: 8px;}
-.num_value {font-size: 18px; font-family: 'ArnoProSemiboldDisplay'; text-align: right;}
-.deck_reflection_label {color:#1DBDC0;}
-.table_tab{overflow:hidden;background:#ffffff;}
-.table_tab li{background:#424246; padding:5px 0px 5px; float:left; margin:0px 0.15% 0px; width: 16.41%; text-align: center; cursor: pointer; color:#ffffff; font:bold;}
-#tableTab1 {margin: 0% 0.15% 0% 0%}
-#tableTab6 {margin: 0% 0% 0% 0.15%}
-.table_tab li:hover{background:#9e9ea2;}
-.table_tab li.select{background:#fafaff; color:#000000;}
-.table_content li{background:#fafaff; padding:10px; width:690px; height:235px;}
-.table_content td{font-size: 13.5px; text-align: center;}
-.table_content th{font-size: 13.5px; text-align: center;}
-#setting_row{height: 30px; color: #ffffff; text-align: center; margin-top: 10px;}
-.table_name{width: 80px; height: 20px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;}
-.table_air_power{width: 57px; text-align: center;}
-.table_day_battle{width: 52px; text-align: center;}
-.table_night_battle{width: 60px; text-align: center;}
-.night_recon_persent{font-size: 16px; text-align: left;}
-.table_anti_aircraft{width: 70px; text-align: center;}
-.anti_aircraft_cutin{width: 200px; text-align: center;}
-#anti_aircraft_table{margin-top: 5px;}
-.table_spotting{width:65px; text-align: right;}
-.table_space{padding-left: 4px;}
-/* */
-.sample-box-13 {
-    background-color: #fafaff;
-    border: 2px solid #444;
-    border-radius: 4px;
-    margin: 1em 1em 1.5em 0;
-    padding: 1.5em 1em 1em 1em;
-    position: relative;
+#setting_fleet{background:#fafaff; padding:5px; width:710px; height: 100%; border-spacing: 10px;}
+
+.drag_ship{
+  position:relative;
+  cursor:pointer;
 }
-.sample-box-13::before {
-    background-color: #fafaff;
-    color: #444;
-    content: "夜戦装備";
-    font-weight: bold;
-    left: 1em;
-    padding: 0 .5em;
-    position: absolute;
-    top: -1em;
+
+.drag_item{
+  position:relative;
+  cursor:pointer;
+  width:132px;
+  border-right-style: hidden; 
 }
-/* https://www.m-field.biz/archives/3200 */
-.checkbox04-parts{
-  position: relative;
-  padding: 5px 20px 5px 53px;
-  margin-bottom: 1.5em;
-  transition:.3s;
-  color: #444;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  display:inline-block;
-  cursor: pointer;
+
+.ship_name{
+  font-size: 18px;
+  padding-left:7px;
+  width:100%;
+  overflow: hidden;
+  white-space: nowrap;
+  border-bottom-style:none;
+  cursor:pointer;
 }
-.checkbox04-parts::before{
-  content: "";
-  display: block;
-  position: absolute;
-  top: 9px;
-  left: 9px;
-  width: 30px;
-  height: 15px;
-  border-radius: 15px;
-  border: 1px solid #aaa;
-  background: #fff;
-  display: block;
+
+.item_name{
+  width: 132px;
+  font-size: 14px;
+  padding-left:3px;
+  overflow: hidden;
+  white-space: nowrap;
 }
-.checkbox04-parts::after{
-  content: "";
-  display: block;
-  position: absolute;
-  top: 11px;
-  left: 11px;
-  width: 13px;
-  height: 13px;
-  background: #aaa;
-  border-radius: 50%;
-  transition:.2s;
-  display: block;
+
+.drop_ship{
+  /* position:absolute; */
 }
-#night_recon:checked + .checkbox04-parts::before {
-  border: 1px solid #2DAD38;
+
+.drop_item{
+  position:absolute;
 }
-#night_recon:checked + .checkbox04-parts::after {
-  left: 26px;
-  background: #2DAD38;
+
+.ship_status{
+  width:330px;
+  height:256px;
 }
-#night_recon:checked + .checkbox04-parts{
-  background: #2DAD38;
-  color: #fff;
-  border: 1px solid #2DAD38;
+
+.ship_option_name{
+  padding-left:3px;
+  width:100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  border-bottom-style:none;
 }
-#searchlight:checked + .checkbox04-parts::before {
-  border: 1px solid #E3672B;
+
+.ship_option_type{
+  width:120px;
+  text-align: center;
+  border-top-style:none;
+  border-bottom-style:none;
 }
-#searchlight:checked + .checkbox04-parts::after {
-  left: 26px;
-  background: #E3672B;
+
+.ship_option_param{
+  width:110px;
+  text-align: center;
+  border-top-style:none;
+  border-bottom-style:none;
 }
-#searchlight:checked + .checkbox04-parts{
-  background: #E3672B;
-  color: #fff;
-  border: 1px solid #E3672B;
+
+.ship_option_button{
+  width:80px;
+  text-align: center;
+  border-top-style:none;
+  border-bottom-style:none;
 }
-#star_shell:checked + .checkbox04-parts::before {
-  border: 1px solid #FE992D;
+
+.item_size{
+  width:6px;
+  height:144px;
+  background:#BDACA0;
+  margin: 4px auto 0px;
 }
-#star_shell:checked + .checkbox04-parts::after {
-  left: 26px;
-  background: #FE992D;
+
+.reset_item{
+  color: #1BADB0;
+  font-size: 18px;
+  font-weight: bold;
+  text-shadow: 1px 1px 0px #FFF,
+  -1px 1px 0px #FFF,
+  1px -1px 0px #FFF,
+  -1px -1px 0px #FFF;
+  text-align:center;
+  cursor:pointer;
 }
-#star_shell:checked + .checkbox04-parts{
-  background: #FE992D;
-  color: #fff;
-  border: 1px solid #FE992D;
-}
-.checkbox04-input{
-  display: none;
-  cursor: pointer;
-}
-/* */
+
 /* Loading... */
 .loader {
   font-size: 10px;

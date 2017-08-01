@@ -60,7 +60,9 @@ function loadItemIcon(callback){
 }
 
 // 画像->文字->画像->文字の順で重ねる
-function dispOrganizationImage(fleetIdx,fleet){
+function dispOrganizationImage(fleetIdx){
+    if(!(fleetIdx in fleet_data)) return;
+    let fleet = fleet_data[fleetIdx];
     let fileAry2 = [];
     let keys = Object.keys(fleet);
     let shipIdx = 0;
@@ -218,28 +220,54 @@ function dispOrganizationImage(fleetIdx,fleet){
             }
         }
         let alvImage = function(alv,itemIdx,isSlotEx){
-            switch(alv){
-                case 1:
-                    fileAry.push({src:'./img/commonAssets[102].png',x:166,y:60+(itemIdx-1)*33});
-                    break;
-                case 2:
-                    fileAry.push({src:'./img/commonAssets[103].png',x:166,y:60+(itemIdx-1)*33});
-                    break;
-                case 3:
-                    fileAry.push({src:'./img/commonAssets[104].png',x:166,y:60+(itemIdx-1)*33});
-                    break;
-                case 4:
-                    fileAry.push({src:'./img/commonAssets[105].png',x:166,y:60+(itemIdx-1)*33});
-                    break;
-                case 5:
-                    fileAry.push({src:'./img/commonAssets[106].png',x:166,y:60+(itemIdx-1)*33});
-                    break;
-                case 6:
-                    fileAry.push({src:'./img/commonAssets[107].png',x:166,y:60+(itemIdx-1)*33});
-                    break;
-                case 7:
-                    fileAry.push({src:'./img/commonAssets[108].png',x:166,y:60+(itemIdx-1)*33});
-                    break;
+            if(isSlotEx){
+                switch(alv){
+                    case 1:
+                        fileAry.push({src:'./img/commonAssets[102].png',x:399,y:333});
+                        break;
+                    case 2:
+                        fileAry.push({src:'./img/commonAssets[103].png',x:399,y:333});
+                        break;
+                    case 3:
+                        fileAry.push({src:'./img/commonAssets[104].png',x:399,y:333});
+                        break;
+                    case 4:
+                        fileAry.push({src:'./img/commonAssets[105].png',x:399,y:333});
+                        break;
+                    case 5:
+                        fileAry.push({src:'./img/commonAssets[106].png',x:399,y:333});
+                        break;
+                    case 6:
+                        fileAry.push({src:'./img/commonAssets[107].png',x:399,y:333});
+                        break;
+                    case 7:
+                        fileAry.push({src:'./img/commonAssets[108].png',x:399,y:333});
+                        break;
+                }
+            } else {
+                switch(alv){
+                    case 1:
+                        fileAry.push({src:'./img/commonAssets[102].png',x:166,y:60+(itemIdx-1)*33});
+                        break;
+                    case 2:
+                        fileAry.push({src:'./img/commonAssets[103].png',x:166,y:60+(itemIdx-1)*33});
+                        break;
+                    case 3:
+                        fileAry.push({src:'./img/commonAssets[104].png',x:166,y:60+(itemIdx-1)*33});
+                        break;
+                    case 4:
+                        fileAry.push({src:'./img/commonAssets[105].png',x:166,y:60+(itemIdx-1)*33});
+                        break;
+                    case 5:
+                        fileAry.push({src:'./img/commonAssets[106].png',x:166,y:60+(itemIdx-1)*33});
+                        break;
+                    case 6:
+                        fileAry.push({src:'./img/commonAssets[107].png',x:166,y:60+(itemIdx-1)*33});
+                        break;
+                    case 7:
+                        fileAry.push({src:'./img/commonAssets[108].png',x:166,y:60+(itemIdx-1)*33});
+                        break;
+                }
             }
         }
         let layerImage = function(alv,itemIdx,isSlotEx,canUsed){

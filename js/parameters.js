@@ -1,5 +1,6 @@
 let SHIP_DATA = {};
 let ITEM_DATA = {};
+let SHIP_TYPE_DATA = {};
 
 /**
  * 艦船
@@ -87,6 +88,10 @@ $(function(){
     httpObj.open("get", START2_PATH, true);
     httpObj.onload = function(){
         let master = JSON.parse(this.responseText).api_data;
+        let mst_stype = master.api_mst_stype;
+        for(let i in mst_stype){
+            SHIP_TYPE_DATA[mst_stype[i].api_id] = mst_stype[i].api_name;
+        }
         let mst_item = master.api_mst_slotitem;
         for(let i in mst_item){
             ITEM_DATA[mst_item[i].api_id] = new ItemParameters(mst_item[i]);
@@ -106,7 +111,8 @@ $(function(){
                 }
                 SHIP_DATA[mst_ship[i].api_id] = new ShipParameters(csv_data,mst_ship[i]);
             }
-            loadPredeck();
+            // loadPredeck();
+            setPresetDeck((getQueryString() != null && "predeck" in getQueryString()) ? getQueryString()["predeck"] : "");
           }).get();
     }
     httpObj.send(null);
