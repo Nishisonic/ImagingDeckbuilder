@@ -65,7 +65,7 @@ function dispOrganizationImage(fleetIdx){
     let fleet = fleet_data[fleetIdx];
     let fileAry2 = [];
     let keys = Object.keys(fleet);
-    let shipIdx = 0;
+    let shipIdx = 1;
 
     function getFileAry(id){
         let fileAry = [];
@@ -73,11 +73,11 @@ function dispOrganizationImage(fleetIdx){
         fileAry.push({src:'./img/commonAssets[43].png',x:143,y:9}); // LV
         for(let i = 0;i < 4;i++){
             fileAry.push({src:'./img/commonAssets[99].png',x:20,y:57 + i * 33});
-            if(i < Number(fleet[Object.keys(fleet)[shipIdx]].ship.get("slotNum"))){
+            if(i < Number(fleet[shipIdx].ship.get("slotNum"))){
                 fileAry.push({src:'./img/commonAssets[112].png',x:20,y:57 + i * 33});
             }
         }
-        if(Object.keys(fleet[Object.keys(fleet)[shipIdx]].ship.get("items")).length > Number(fleet[Object.keys(fleet)[shipIdx]].ship.get("slotNum"))){
+        if(5 in fleet[shipIdx].ship.get("items")){
             fileAry.push({src:'./img/commonAssets[287].png',x:339,y:323}); // 補強増設說明
             fileAry.push({src:'./img/commonAssets[99].png',x:253,y:331});
             fileAry.push({src:'./img/commonAssets[112].png',x:253,y:331});
@@ -107,40 +107,40 @@ function dispOrganizationImage(fleetIdx){
         }
         // 艦名
         let ctx = canvas.getContext('2d');
-        let name = fleet[Object.keys(fleet)[shipIdx]].ship.get("name");
+        let name = fleet[shipIdx].ship.get("name");
         ctx.font="18px 'メイリオ'";
         ctx.fillStyle = "#55493d";
         ctx.fillText(name.substr(0,strLength(name,130)),12,20);
         // HP
         ctx.font="12px 'ArnoProSemiboldDisplay'";
-        ctx.fillText(fleet[Object.keys(fleet)[shipIdx]].ship.get('taik') + "/" + fleet[Object.keys(fleet)[shipIdx]].ship.get('taik'),78,45);
+        ctx.fillText(fleet[shipIdx].ship.get('taik') + "/" + fleet[shipIdx].ship.get('taik'),78,45);
         // Lv
         ctx.font="23px 'ArnoProSemiboldDisplay'";
         ctx.textAlign = "right";
-        ctx.fillText(fleet[Object.keys(fleet)[shipIdx]].ship.lv,197,23,31);
+        ctx.fillText(fleet[shipIdx].ship.lv,197,23,31);
         // ステータス
         ctx.font="18px 'ArnoProSemiboldDisplay'";
         let status = ["taik","houg","souk","raig","kaih","tyku","slot","tais","soku","saku","leng","luck"];
         status.forEach(function(x,i,a){
             switch(x){
                 case "taik":
-                    ctx.fillText(fleet[Object.keys(fleet)[shipIdx]].ship.get(x),111,240);
+                    ctx.fillText(fleet[shipIdx].ship.get(x),111,240);
                     break;
                 case "souk":
-                    ctx.fillText(fleet[Object.keys(fleet)[shipIdx]].ship.get(x),111,263);
+                    ctx.fillText(fleet[shipIdx].ship.get(x),111,263);
                     break;
                 case "kaih":
-                    ctx.fillText(fleet[Object.keys(fleet)[shipIdx]].ship.get(x),111,285);
+                    ctx.fillText(fleet[shipIdx].ship.get(x),111,285);
                     break;
                 case "slot":
                     let slot = 0;
                     for(let j = 1;j <= 4;j++){
-                        slot += Number(fleet[Object.keys(fleet)[shipIdx]].ship.get("slot"+j));
+                        slot += Number(fleet[shipIdx].ship.get("slot"+j));
                     }
                     ctx.fillText(slot,111,309);
                     break;
                 case "soku":
-                    switch(Number(fleet[Object.keys(fleet)[shipIdx]].ship.get(x))){
+                    switch(Number(fleet[shipIdx].ship.get(x))){
                         case 0: // 無
                             fileAry.push({src:'./img/commonAssets[118].png',x:87,y:320});
                             break;
@@ -159,7 +159,7 @@ function dispOrganizationImage(fleetIdx){
                     }
                     break;
                 case "leng":
-                    switch(Number(fleet[Object.keys(fleet)[shipIdx]].ship.get(x))){
+                    switch(Number(fleet[shipIdx].ship.get(x))){
                         case 0: // 無
                             fileAry.push({src:'./img/commonAssets[118].png',x:88,y:342});
                             break;
@@ -178,25 +178,25 @@ function dispOrganizationImage(fleetIdx){
                     }
                     break;
                 case "houg":
-                    ctx.fillText(fleet[Object.keys(fleet)[shipIdx]].ship.get(x),211,240);
+                    ctx.fillText(fleet[shipIdx].ship.get(x),211,240);
                     break;
                 case "raig":
-                    ctx.fillText(fleet[Object.keys(fleet)[shipIdx]].ship.get(x),211,263);
+                    ctx.fillText(fleet[shipIdx].ship.get(x),211,263);
                     break;
                 case "tyku":
-                    ctx.fillText(fleet[Object.keys(fleet)[shipIdx]].ship.get(x),211,285);
+                    ctx.fillText(fleet[shipIdx].ship.get(x),211,285);
                     break;
                 case "tais":
-                    ctx.fillText(fleet[Object.keys(fleet)[shipIdx]].ship.get(x),211,309);
+                    ctx.fillText(fleet[shipIdx].ship.get(x),211,309);
                     break;
                 case "saku":
-                    ctx.fillText(fleet[Object.keys(fleet)[shipIdx]].ship.get(x),211,331);
+                    ctx.fillText(fleet[shipIdx].ship.get(x),211,331);
                     break;
                 case "luck":
-                    ctx.fillText(fleet[Object.keys(fleet)[shipIdx]].ship.get(x),211,354);
+                    ctx.fillText(fleet[shipIdx].ship.get(x),211,354);
                     break;
                 default:
-                    ctx.fillText(fleet[Object.keys(fleet)[shipIdx]].ship.get(x),111 + i % 2 * 100,239 + Math.floor(i / 2) * 23.5);
+                    ctx.fillText(fleet[shipIdx].ship.get(x),111 + i % 2 * 100,239 + Math.floor(i / 2) * 23.5);
                     break;
             }
         });
@@ -289,10 +289,10 @@ function dispOrganizationImage(fleetIdx){
         // 装備名
         ctx.font="14px 'メイリオ'";
         ctx.textAlign = "left";
-        for(let itemIdx in fleet[Object.keys(fleet)[shipIdx]].ship.get("items")){
-            let item = fleet[Object.keys(fleet)[shipIdx]].ship.get("items")[itemIdx];
+        for(let itemIdx in fleet[shipIdx].ship.get("items")){
+            let item = fleet[shipIdx].ship.get("items")[itemIdx];
             let length = strLength(item.get("name"),item.alv > 0 ? 140 : 155);
-            if(itemIdx <= fleet[Object.keys(fleet)[shipIdx]].ship.get("slotNum")){
+            if(itemIdx <= fleet[shipIdx].ship.get("slotNum")){
                 switch(Number(itemIdx)){
                     case 1:
                         fileAry.push({src:itemiconAry[item.get("type3")],x:20,y:57});
@@ -315,14 +315,14 @@ function dispOrganizationImage(fleetIdx){
         }
         ctx.font="18px 'ArnoProSemiboldDisplay'";
         ctx.textAlign = "right";
-        for(let itemIdx in fleet[Object.keys(fleet)[shipIdx]].ship.get("items")){
-            let item = fleet[Object.keys(fleet)[shipIdx]].ship.get("items")[itemIdx];
-            if(itemIdx <= fleet[Object.keys(fleet)[shipIdx]].ship.get("slotNum")){
+        for(let itemIdx in fleet[shipIdx].ship.get("items")){
+            let item = fleet[shipIdx].ship.get("items")[itemIdx];
+            if(itemIdx <= fleet[shipIdx].ship.get("slotNum")){
                 layerImage(item.alv,itemIdx,false,true);
                 alvImage(item.alv,itemIdx,false);
                 lvImage(item.lv,itemIdx,false);
                 if(item.get("type4") != 0){
-                    ctx.fillText(Number(fleet[Object.keys(fleet)[shipIdx]].ship.get("slot"+itemIdx)),18,77+(itemIdx-1)*33);
+                    ctx.fillText(Number(fleet[shipIdx].ship.get("slot"+itemIdx)),18,77+(itemIdx-1)*33);
                 }
             } else {
                 layerImage(item.alv,itemIdx,true,true);
@@ -330,7 +330,7 @@ function dispOrganizationImage(fleetIdx){
                 lvImage(item.lv,itemIdx,true);
             }
         }
-        if(Number(fleet[Object.keys(fleet)[shipIdx]].ship.lv) > 99){ // 指輪
+        if(Number(fleet[shipIdx].ship.lv) > 99){ // 指輪
             fileAry.push({src:"./img/commonAssets[66].png",x:406,y:261});
         }
         ctx.font="13px 'ArnoProSemiboldDisplay'";
@@ -348,10 +348,10 @@ function dispOrganizationImage(fleetIdx){
         ctx.fillStyle = "#45a9a5";
 
         // 改修値
-        for(let itemIdx in fleet[Object.keys(fleet)[shipIdx]].ship.get("items")){
-            let item = fleet[Object.keys(fleet)[shipIdx]].ship.get("items")[itemIdx];
+        for(let itemIdx in fleet[shipIdx].ship.get("items")){
+            let item = fleet[shipIdx].ship.get("items")[itemIdx];
             if(item.lv > 9 || item.lv == 0) continue;
-            if(itemIdx <= fleet[Object.keys(fleet)[shipIdx]].ship.get("slotNum")){
+            if(itemIdx <= fleet[shipIdx].ship.get("slotNum")){
                 ctx.fillText(item.lv,205,77+(itemIdx-1)*33);
             } else {
                 ctx.fillText(item.lv,439,351);
@@ -365,11 +365,11 @@ function dispOrganizationImage(fleetIdx){
     function nextImg(canvas){
         // 保存
         fileAry2.push({src:canvas.toDataURL(),x:fileAry2.length % 2 * 460,y:Math.floor(fileAry2.length / 2) * 365});
-        if(Object.keys(fleet).length > ++shipIdx){
-            let fileAry = getFileAry(fleet[Object.keys(fleet)[shipIdx]].ship.id);
+        if(Object.keys(fleet).length >= ++shipIdx){
+            let fileAry = getFileAry(fleet[shipIdx].ship.id);
             composite(fileAry,460,365,drawPhase1);
         } else {
-            composite(fileAry2,shipIdx > 1 ? 920 : 460,Math.ceil(shipIdx / 2) * 365,drawImg);
+            composite(fileAry2,shipIdx > 2 ? 920 : 460,Math.ceil((shipIdx - 1) / 2) * 365,drawImg);
         }
     }
 
@@ -379,8 +379,8 @@ function dispOrganizationImage(fleetIdx){
         $("#orgImg" + fleetIdx).attr("src",canvas.toDataURL());
     }
 
-    if(Object.keys(fleet).length > shipIdx){
-        let fileAry = getFileAry(fleet[Object.keys(fleet)[shipIdx]].ship.id);
+    if(Object.keys(fleet).length >= shipIdx){
+        let fileAry = getFileAry(fleet[shipIdx].ship.id);
         loadItemIcon(function(){
             loadFont(composite.bind(this,fileAry,460,365,drawPhase1));
         });

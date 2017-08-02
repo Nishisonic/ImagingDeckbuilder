@@ -107,7 +107,7 @@ function iniStatusOption(){
     });
     
     //ドロップオブジェクト設定
-    $('.drag_item').droppable({
+    $('.drop_item').droppable({
         drop: function( event, ui ) {
             if($(this)[0].id.substr(-2,1) === nowDragObj[0].id.substr(-2,1)){
                 swapItem($(this)[0].id.substr(-2,1),$(this)[0].id.slice(-1),nowDragObj[0].id.slice(-1));
@@ -121,16 +121,25 @@ function iniStatusOption(){
             let idx = Number($(this)[0].id.slice(-1));
             removeItems(idx);
         });
+        
         $('#ship_option_set' + shipIdx).click(function(){
             loadPredeck();
         });
 
         $('#ship_option_lv' + shipIdx).click(function(){
             let idx = Number($(this)[0].id.slice(-1));
-            changeLv(idx,$(this).val());
+            changeShipLv(idx,$(this).val());
         });
 
         for(let itemIdx = 1;itemIdx <= 5;itemIdx++){
+            $('#ship_option_item_alv' + shipIdx + itemIdx).change(function(){
+                let idx = Number($(this)[0].id.slice(-2));
+                changeItemAlv(Math.floor(idx / 10),idx % 10,$(this).val());
+            });
+            $('#ship_option_item_lv' + shipIdx + itemIdx).change(function(){
+                let idx = Number($(this)[0].id.slice(-2));
+                changeItemLv(Math.floor(idx / 10),idx % 10,$(this).val());
+            });
             $('#ship_option_item_remove' + shipIdx + itemIdx).click(function(){
                 let idx = Number($(this)[0].id.slice(-2));
                 removeItem(Math.floor(idx / 10),idx % 10);
@@ -143,16 +152,16 @@ function setPresetDeck(str){
     let param = arguments.length === 1 ? str : $("#parseDeckFormatLabel").val();
     if(param != ""){
         parseDeckFormat(param);
-        loadPredeck();
+        loadPredeck(true);
     }
 }
 
-function loadPredeck(){
+function loadPredeck(deckBuilderMode){
     for(let i = 1;i <= 4;i++){
         if(fleet_data[i] != null && Object.keys(fleet_data[i]).length > 0){
             $("#orgImg" + i).attr("src","");
             $("#loader" + i).show();
-            formatFleetData(i);
+            formatFleetData(i,deckBuilderMode);
             dispOrganizationImage(i);
             if($('#fleetTab' + i).hasClass('select')){
                 dispStatus(i);
@@ -257,13 +266,17 @@ function setShipOption(no){
         for(let i = 1;i <= 5;i++){
             result += '<tr>';
             if(i == 1) result += '<td rowspan="5" style="width:23px;"><div class="item_size"></div><div id="ship_option_item_removes' + no + '" class="reset_item">x</div></td>';
-            result += '<td id="ship_option_eq' + no + i + '" style="width:20px; text-align:center;">' + (i == 5 ? '補' : '') + '</td>' +
-                    '<td id="ship_option_item' + no + i +'" class="drag_item"><div id="ship_option_item_name' + no + i + '" class="item_name"></div></td>'+
-                    '<td style="padding-left:3px; border-left-style:none;">'+
-                        getSelectAlvBoxSource('ship_option_item_alv' + no + i) +
-                        getSelectLvBoxSource('ship_option_item_lv' + no + i) +
-                        '<span id="ship_option_item_remove' + no + i + '" class="reset_item" style="padding-left:6px; padding-right:4px;">x</span>' +
-                    '</td>';
+            result += '<td id="ship_option_eq' + no + i + '" style="width:20px; text-align:center;">' + (i == 5 ? '補' : '') + '</td>';
+            if(i in fleet_data[selectTabIdx][no].ship.get("items")){
+                result += '<td id="ship_option_item' + no + i +'" class="drag_item drop_item"><div id="ship_option_item_name' + no + i + '" class="item_name"></div></td>'+
+                        '<td style="padding-left:3px; border-left-style:none;">'+
+                            getSelectAlvBoxSource('ship_option_item_alv' + no + i) +
+                            getSelectLvBoxSource('ship_option_item_lv' + no + i) +
+                            '<span id="ship_option_item_remove' + no + i + '" class="reset_item" style="padding-left:6px; padding-right:4px;">x</span>' +
+                        '</td>';
+            } else {
+                result += '<td id="ship_option_item' + no + i +'" class="drop_item"></td><td style="border-left-style: hidden;"></td>';
+            }
             result += '</tr>';
         }
         result += '</table>';
@@ -321,17 +334,31 @@ function dispStatus(idx){
         $("#ship_option_type" + shipIdx).text(SHIP_TYPE_DATA[fleet[shipIdx].ship.get("stype")]);
         $("#ship_option_lv" + shipIdx).val(fleet[shipIdx].ship.lv);
         $("#ship_banner_img" + shipIdx).attr("src","https://raw.githubusercontent.com/Nishisonic/KancolleArchive/master/Image/Ship/1/" +fleet[shipIdx].ship.id + ".png");
+        let allEq = function(){
+            let sum = 0;
+            for(let i = 1;i <= 4;i++){
+                sum += Number(fleet[shipIdx].ship.get('slot' + i));
+            }
+            return sum;
+        }();
+        let items = fleet[shipIdx].ship.get("items");
+        // 搭載機数セット
+        for(let itemIdx = 1;itemIdx <= fleet[shipIdx].ship.get("slotNum") && allEq > 0;itemIdx++){
+            $("#ship_option_eq" + shipIdx + itemIdx).text(fleet[shipIdx].ship.get("slot"+itemIdx));
+            if(itemIdx in items && items[itemIdx].get("type4") != 0){
+                $("#ship_option_eq" + shipIdx + itemIdx).css('color','#000000');
+            } else {
+                $("#ship_option_eq" + shipIdx + itemIdx).css('color','#969696');
+            }
+        }
         // 装備設定
-        for(let itemIdx in fleet[shipIdx].ship.get("items")){
-            let item = fleet[shipIdx].ship.get("items")[itemIdx];
+        for(let itemIdx in items){
+            let item = items[itemIdx];
             if(item === undefined) continue;
             if(itemIdx <= fleet[shipIdx].ship.get("slotNum")){
                 $("#ship_option_item_name" + shipIdx + itemIdx).text(item.get("name"));
                 $("#ship_option_item_lv" + shipIdx + itemIdx).val(item.lv);
                 $("#ship_option_item_alv" + shipIdx + itemIdx).val(item.alv);
-                if(item.get("type4") != 0){
-                    $("#ship_option_eq" + shipIdx + itemIdx).text(fleet[shipIdx].ship.get("slot"+itemIdx));
-                }
             } else {
                 $("#ship_option_item_name" + shipIdx + 5).text(item.get("name"));
                 $("#ship_option_item_lv" + shipIdx + 5).val(item.lv);
@@ -358,8 +385,16 @@ function dispStatus(idx){
     iniStatusOption();
 }
 
-function changeLv(shipIdx,val){
+function changeShipLv(shipIdx,val){
     fleet_data[selectTabIdx][shipIdx].ship.lv = val;
+}
+
+function changeItemAlv(shipIdx,itemIdx,val){
+    fleet_data[selectTabIdx][shipIdx].ship.get("items")[itemIdx].alv = Number(val);
+}
+
+function changeItemLv(shipIdx,itemIdx,val){
+    fleet_data[selectTabIdx][shipIdx].ship.get("items")[itemIdx].lv = Number(val);
 }
 
 // 変更必要なし
@@ -398,24 +433,14 @@ function swapShip(a,b){
 function swapItem(shipIdx,a,b){
     if(!(selectTabIdx in fleet_data && shipIdx in fleet_data[selectTabIdx])) return;
     let items = fleet_data[selectTabIdx][shipIdx].ship.get("items");
-    // ? = 5 : 補強増設
-    // a=5のときは無条件で移してok
-    // aとb両方に装備あるときも移してok
-    // b=5のときはaに装備があれば移す、なければ維持
-    // それ以外はシフト
-    if(a == 5 || (items[a] != undefined && (b == 5 || items[b] != undefined))){
-        items[b] = [items[a],items[a] = items[b]][0];
-    } else if(b != 5){
-        // 移す先が空白(多分)
-        items[a] = items[b];
-        delete items[b];
-    }
+    items[b] = [items[a],items[a] = items[b]][0];
     formatFleetData(selectTabIdx);
     dispStatus(selectTabIdx);
 }
 
 // 艦これ本家の方にデータを整形し直す
-function formatFleetData(idx){
+function formatFleetData(idx,_deckBuilderMode){
+    let deckBuilderMode = _deckBuilderMode === undefined ? false : _deckBuilderMode;
     let fleet = fleet_data[idx];
     if(fleet === undefined) return;
     // 艦順番整形
@@ -434,38 +459,58 @@ function formatFleetData(idx){
     while(s > 0 && fleet[s] == undefined){
         delete fleet[s--];
     }
-    // 艦装備整形
-    // 補強増設は全て5に移す
+    
+    // 装備順番整形改
     for(let j in fleet){
         let items = fleet[j].ship.get("items");
-        let i = 1;
-        let k = fleet[j].ship.get("slotNum") + 1;
-        c = 1;
-        // 補強増設を退避
-        for(let l = k;l <= 5 && items[5] == undefined;l++){
-            items[5] = items[l];
-        }
-        // 取り敢えず4まで拡張
-        while(i <= Object.keys(items).length && c <= 4 - i){
-            if(items[i] == undefined){
-                items[i] = items[i + c];
-                delete items[i + c++];
-            } else {
-                i++;
-                c = 1;
+        let slotNum = fleet[j].ship.get("slotNum");
+        // undefined排除
+        for(let k in items){
+            if(items[k] == undefined){
+                delete items[k];
             }
         }
-        // 不純物取り除き
-        for(i = k;i < 5;i++){
-            delete items[i];
+        let tmpItems = {};
+        let no = 1;
+        // でっきみるだー形式
+        if(!deckBuilderMode){
+            let change = false;
+            // ※1
+            // もし、5スロ目に装備が入っている場合、
+            // 5スロ目のものを補強増設[5]に移す
+            if(5 in items){
+                tmpItems[5] = items[5];
+                change = true;
+            }
+            // シフトして、順番通りに並べ替える(補強増設を除く)
+            for(let k = 1;k < 5;k++){
+                if(k in items){
+                    tmpItems[no++] = items[k];
+                }
+            }
+            // ※1が実行されなかった場合かつ、
+            // 装備数の合計がスロット数を上回った場合
+            if(!change && no > slotNum + 1){
+                tmpItems[5] = tmpItems[slotNum + 1];
+                delete tmpItems[slotNum + 1];
+            }
         }
-        // シフト
-        while(k > 0 && items[k] == undefined){
-            delete items[k--];
+        // デッキビルダー形式
+        else {
+            // もし、スロット数+1に装備が入っている場合、
+            // スロット数+1のものを補強増設[5]に移す
+            if((slotNum + 1) in items){
+                tmpItems[5] = items[slotNum + 1];
+            }
+            // シフトして、順番通りに並べ替える(補強増設を除く)
+            for(let k = 1;k < slotNum + 1;k++){
+                if(k in items){
+                    tmpItems[no++] = items[k];
+                }
+            }
         }
-        // ない場合があるので
-        if(items[5] == undefined){
-            delete items[5];
-        }
+        if(idx == 1) console.log(deckBuilderMode,tmpItems)
+        // 書き換え
+        fleet[j].ship.set("items",tmpItems);
     }
 }
