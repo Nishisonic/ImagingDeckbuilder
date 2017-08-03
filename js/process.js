@@ -121,6 +121,27 @@ function iniStatusOption(){
             let idx = Number($(this)[0].id.slice(-1));
             removeItems(idx);
         });
+
+        $('#ship_option_item_removes' + shipIdx).hover(
+            function(){
+                    let idx = Number($(this)[0].id.slice(-1));
+                    $('#item_size' + idx).css('background','#7FE2DB');
+                    $(this).append('<div class="arrow_box">全装備解除</div>')
+                    $('.arrow_box').css('top',(parseInt($('.arrow_box').css('top')) - 20) + 'px');
+                    $('.arrow_box').css('left',(parseInt($('.arrow_box').css('left')) - 2) + 'px');
+            },function(){
+                let idx = Number($(this)[0].id.slice(-1));
+                $('#item_size' + idx).css('background','#BDACA0');
+                $(".arrow_box").remove();
+            }
+        );
+        $('#ship_option_item_removes' + shipIdx).mouseover(function(){
+            let idx = Number($(this)[0].id.slice(-1));
+        });
+
+        $('#ship_option_item_removes' + shipIdx).mouseout(function(){
+            let idx = Number($(this)[0].id.slice(-1));
+        });
         
         $('#ship_option_set' + shipIdx).click(function(){
             loadPredeck();
@@ -248,7 +269,7 @@ function setShipOption(no){
         '<table border="1" cellspacing="0" style="width:330px;">' +
             '<tr>' +
                 '<td id="ship_option_name' + no + '" class="ship_name"></td>' +
-                '<td class="drag_ship"><img id="ship_banner_img'+ no + '" style="display: block; border-bottom-style:none; width:160px; height:40px;"></img></td>' +
+                '<td class="drag_ship"><img id="ship_banner_img' + no + '" style="display: block; border-bottom-style:none; width:160px; height:40px;"></img></td>' +
             '</tr>'+
         '</table>' +
         '<table border="1" cellspacing="0" style="width:330px;">' +
@@ -265,7 +286,7 @@ function setShipOption(no){
         let result = '<table border="1" cellspacing="0" style="width:330px;">';
         for(let i = 1;i <= 5;i++){
             result += '<tr>';
-            if(i == 1) result += '<td rowspan="5" style="width:23px;"><div class="item_size"></div><div id="ship_option_item_removes' + no + '" class="reset_item">x</div></td>';
+            if(i == 1) result += '<td rowspan="5" style="width:23px;"><div id="item_size' + no + '" class="item_size"></div><div id="ship_option_item_removes' + no + '" class="reset_item">x</div></td>';
             result += '<td id="ship_option_eq' + no + i + '" style="width:20px; text-align:center;">' + (i == 5 ? '補' : '') + '</td>';
             if(i in fleet_data[selectTabIdx][no].ship.get("items")){
                 result += '<td id="ship_option_item' + no + i +'" class="drag_item drop_item"><div id="ship_option_item_name' + no + i + '" class="item_name"></div></td>'+
@@ -408,9 +429,13 @@ function removeShip(shipIdx){
 
 // 変更必要なし
 function removeItems(shipIdx){
+    let fleet = fleet_data[selectTabIdx];
+    if(!(shipIdx in fleet && itemIdx in fleet[shipIdx].ship.get("items"))) return;
     for(let itemIdx = 1;itemIdx <= 5;itemIdx++){
-        removeItem(shipIdx,itemIdx);
+        delete fleet[shipIdx].ship.get("items")[itemIdx];
     }
+    formatFleetData(selectTabIdx);
+    dispStatus(selectTabIdx);
 }
 
 function removeItem(shipIdx,itemIdx){
