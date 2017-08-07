@@ -87,7 +87,6 @@ li{list-style:none;}
 .drop_item{
   /* position:absolute; */
   height: 2em;
-  border-right-style: hidden;
 }
 
 .ship_status{

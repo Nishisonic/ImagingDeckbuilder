@@ -119,6 +119,7 @@ function iniStatusOption() {
     //ドロップオブジェクト設定
     $( '.drop_item' ).droppable( {
         drop: function ( event, ui ) {
+            console.log($( this )[ 0 ].id.substr( -2, 1 ) , nowDragObj[ 0 ].id.substr( -2, 1 ))
             if ( $( this )[ 0 ].id.substr( -2, 1 ) === nowDragObj[ 0 ].id.substr( -2, 1 ) ) {
                 swapItem( $( this )[ 0 ].id.substr( -2, 1 ), $( this )[ 0 ].id.slice( -1 ), nowDragObj[ 0 ].id.slice( -1 ) );
             }
@@ -181,7 +182,7 @@ function iniStatusOption() {
 
     $( "#sidebar" ).simplerSidebar( {
         selectors: {
-            trigger: ".drag_item",
+            trigger: ".drop_item",
             quitter: ".flex"
         },
         events: {
@@ -331,16 +332,16 @@ function setShipOption( no ) {
             if ( i == 1 ) result += '<td rowspan="5" style="width:23px;"><div id="item_size' + no + '" class="item_size"></div><div id="ship_option_item_removes' + no + '" class="reset_item">x</div></td>';
             result += '<td id="ship_option_eq' + no + i + '" style="width:20px; text-align:center;">' + ( i == 5 ? '補' : '' ) + '</td>';
             if ( i in fleet_data[ selectTabIdx ][ no ].ship.get( "items" ) ) {
-                result += '<td id="ship_option_item' + no + i + '" class="drag_item drop_item"><div id="ship_option_item_name' + no + i + '" class="item_name"></div></td>' +
+                result += '<td id="ship_option_item' + no + i + '" class="drag_item drop_item" style="border-right-style: hidden;"><div id="ship_option_item_name' + no + i + '" class="item_name"></div></td>' +
                     '<td style="padding-left:3px; border-left-style:none;">' +
                     getSelectAlvBoxSource( 'ship_option_item_alv' + no + i ) +
                     getSelectLvBoxSource( 'ship_option_item_lv' + no + i ) +
                     '<span id="ship_option_item_remove' + no + i + '" class="reset_item" style="padding-left:6px; padding-right:4px;">x</span>' +
                     '</td>';
             } else if ( i <= fleet_data[ selectTabIdx ][ no ].ship.get( "slotNum" ) || i == 5 ) {
-                result += '<td colspan="3" style="text-align:center; cursor:pointer;"><span style="font-size:14px; color:#1DBDC0;" class="fa fa-plus-circle" aria-hidden="true"> 装備を追加する</span></td>';
+                result += '<td id="ship_option_item' + no + i + '" colspan="3" class="drop_item" style="text-align:center; cursor:pointer;"><span style="font-size:14px; color:#1DBDC0;" class="fa fa-plus-circle" aria-hidden="true"> 装備を追加する</span></td>';
             } else {
-                result += '<td id="ship_option_item' + no + i + '" class="drop_item"></td><td style="border-left-style: hidden;"></td>';
+                result += '<td id="ship_option_item' + no + i + '" class="drop_item" style="border-right-style: hidden;"></td><td style="border-left-style: hidden;"></td>';
             }
             result += '</tr>';
         }
