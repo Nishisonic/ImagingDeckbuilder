@@ -1,62 +1,30 @@
 let itemiconAry = {};
 
-function loadFont(callback){
-    //描画を試行する
-    //リトライ回数
-    let cnt = 0;
-    function tryDraw(){
-        if(!loaded() && cnt < 30){
-            setTimeout(tryDraw, 100);
-            cnt++;
-        } else {
-            callback();
-        }
+// 装備アイコンやフォントなど
+function loadDetails(){
+    // 読み込み済み
+    if(Object.keys(itemiconAry).length === Object.keys(ITEM_TYPE3_DATA).length){
+        return Promise.resolve();
     }
-    //webフォントのロード状況を確認する
-    let c1 = document.createElement("canvas");
-    let c2 = c1.cloneNode(false);
-    let ctx1 = c1.getContext("2d");
-    let ctx2 = c2.getContext("2d");
-    //webフォントと代替フォントとを指定．
-    //NOTE:monoscopeだとwebkitでリロード時に失敗する
-    ctx1.font = "normal 30px 'ArnoProSemiboldDisplay', serif";
-    ctx2.font = "normal 30px serif";
-    let text = "0123456789";  
-    function loaded(){
-        //テキスト幅を比較する
-        //webフォントが利用可能となると，フォント幅が一致する．
-        let tm1 = ctx1.measureText(text);
-        let tm2 = ctx2.measureText(text);
-        return tm1.width != tm2.width;
+    let task = [];
+    task.push(document.fonts.load('10px "ArnoProSemiboldDisplay"'));
+    for(let i in ITEM_TYPE3_DATA){
+        let tmpTask = new Promise(function(resolve,reject){
+            let image = new Image();
+            image.crossOrigin = 'anonymous';
+            image.src = './img/itemicon/' + i + '.png';
+            image.addEventListener('load', function(){
+                let canvas = document.createElement('canvas');
+                let ctx = canvas.getContext('2d');
+                canvas.width = canvas.height = 30;
+                ctx.drawImage(image, -1 * (image.width - 30) / 2, -1 * (image.height - 30) / 2);
+                itemiconAry[i] = canvas.toDataURL();
+                resolve();
+            }, false);
+        });
+        task.push(tmpTask);
     }
-    //処理開始
-    tryDraw();
-}
-
-// 装備アイコン
-function loadItemIcon(callback){
-    function getImage(i){
-        if(itemiconAry[i] !== undefined){
-            callback();
-            return;
-        }
-        let image = new Image();
-        image.crossOrigin = 'anonymous';
-        image.src = './img/itemicon/' + i + '.png';
-        image.addEventListener('load', function(){
-            let canvas = document.createElement('canvas');
-            let ctx = canvas.getContext('2d');
-            canvas.width = canvas.height = 30;
-            ctx.drawImage(image, -1 * (image.width - 30) / 2, -1 * (image.height - 30) / 2);
-            itemiconAry[i] = canvas.toDataURL();
-            getImage(i + 1);
-        }, false);
-        image.addEventListener('error',function(){
-            // Http:404
-            callback();
-        },false);
-    }
-    getImage(1);
+    return Promise.all(task);
 }
 
 // 画像->文字->画像->文字の順で重ねる
@@ -381,8 +349,8 @@ function dispOrganizationImage(fleetIdx){
 
     if(Object.keys(fleet).length >= shipIdx){
         let fileAry = getFileAry(fleet[shipIdx].ship.id);
-        loadItemIcon(function(){
-            loadFont(composite.bind(this,fileAry,460,365,drawPhase1));
+        loadDetails().then(function(){
+            composite(fileAry,460,365,drawPhase1);
         });
     }
 }
@@ -407,7 +375,7 @@ function composite(fileAry,width,height,callback){
                 loadImgs(call);
             }
         }, false);
-        
+
         imgData.img.src = fileAry[imgAry.length].src;
         imgData.x = fileAry[imgAry.length].x;
         imgData.y = fileAry[imgAry.length].y;

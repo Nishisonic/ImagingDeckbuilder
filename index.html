@@ -1,18 +1,23 @@
 <!DOCTYPE HTML>
 <html lang="ja">
-  <head>
+
+<head>
     <title>デッキミルダー</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="param/data.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="//cdn.rawgit.com/simple-sidebar/simpler-sidebar/master/dist/jquery.simpler-sidebar.min.js"></script>
     <script src="//d3js.org/d3.v4.min.js"></script>
-    <script src="js/process.js"></script>
     <script src="js/parameters.js"></script>
+    <script src="js/process.js"></script>
     <script src="js/draw.js"></script>
-  </head>
-  <body>
+</head>
+
+<body>
     <div class="flex">
         <table border="1" class="content">
             <tr>
@@ -25,21 +30,33 @@
             <tr>
                 <td style="margin:0px; padding: 0px;">
                     <ul class="fleet_tab">
-                        <li id="fleetTab1" class="select"><img src="./img/OrganizeMain[143].png"></img></li>
-                        <li id="fleetTab2"><img src="./img/OrganizeMain[139].png"></img></li>
-                        <li id="fleetTab3"><img src="./img/OrganizeMain[140].png"></img></li>
-                        <li id="fleetTab4"><img src="./img/OrganizeMain[141].png"></img></li>
+                        <li id="fleetTab1" class="select"><img src="./img/OrganizeMain[143].png"></img>
+                        </li>
+                        <li id="fleetTab2"><img src="./img/OrganizeMain[139].png"></img>
+                        </li>
+                        <li id="fleetTab3"><img src="./img/OrganizeMain[140].png"></img>
+                        </li>
+                        <li id="fleetTab4"><img src="./img/OrganizeMain[141].png"></img>
+                        </li>
                     </ul>
                     <ul class="fleet_content">
-                        <li><div id="loader1" class="loader">Loading...</div><img id="orgImg1"></img></li>
-                        <li class="hide"><div id="loader2" class="loader">Loading...</div><img id="orgImg2"></img></li>
-                        <li class="hide"><div id="loader3" class="loader">Loading...</div><img id="orgImg3"></img></li>
-                        <li class="hide"><div id="loader4" class="loader">Loading...</div><img id="orgImg4"></img></li>
+                        <li>
+                            <div id="loader1" class="loader">Loading...</div><img id="orgImg1"></img>
+                        </li>
+                        <li class="hide">
+                            <div id="loader2" class="loader">Loading...</div><img id="orgImg2"></img>
+                        </li>
+                        <li class="hide">
+                            <div id="loader3" class="loader">Loading...</div><img id="orgImg3"></img>
+                        </li>
+                        <li class="hide">
+                            <div id="loader4" class="loader">Loading...</div><img id="orgImg4"></img>
+                        </li>
                     </ul>
                 </td>
             </tr>
         </table>
-        <table border="1" class="sidebar">
+        <table border="1" class="content">
             <tr>
                 <td class="fleet_detail">
                     <div class="fleet_name">
@@ -83,5 +100,6 @@
             </tr>
         </table>
     </div>
-  </body>
+    <div id="sidebar"></div>
+</body>
 <html>

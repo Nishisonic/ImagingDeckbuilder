@@ -6,21 +6,21 @@
 }
 /* Bootstrap3.3.1 */
 @font-face {
-  font-family: 'Glyphicons Halflings';
-  src: url('../fonts/glyphicons-halflings-regular.eot');
-  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+    font-family: 'Glyphicons Halflings';
+    src: url('../fonts/glyphicons-halflings-regular.eot');
+    src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 .glyphicon {
-  position: relative;
-  top: 1px;
-  display: inline-block;
-  font-family: 'Glyphicons Halflings';
-  font-style: normal;
-  font-weight: normal;
-  line-height: 1;
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
 
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 /* */
 .flex {
@@ -30,7 +30,6 @@
 }
 body {font-family: 'メイリオ';}
 .content{ background: #424246; width: 720px; height: 920px;}
-.sidebar{ background: #424246; width: 720px; height: 920px;}
 ul{margin: 0px;padding: 0px;}
 li{list-style:none;}
 .fleet_tab{overflow:hidden;background:#ffffff;}
@@ -49,32 +48,36 @@ li{list-style:none;}
 #setting_fleet{background:#fafaff; padding:5px; width:710px; height: 100%; border-spacing: 10px;}
 
 .drag_ship{
-  position:relative;
-  cursor:pointer;
+    position:relative;
+    cursor:pointer;
 }
 
 .drag_item{
-  position:relative;
-  cursor:pointer;
-  width:132px;
+    position:relative;
+    cursor:pointer;
+    width:132px;
+}
+
+.td_ship_name{
+    width:100%;
+    cursor:pointer;
 }
 
 .ship_name{
-  font-size: 18px;
-  padding-left:7px;
-  width:100%;
-  overflow: hidden;
-  white-space: nowrap;
-  border-bottom-style:none;
-  cursor:pointer;
+    width:145px;
+    font-size: 18px;
+    padding-left:7px;
+    overflow: hidden;
+    white-space: nowrap;
+    border-bottom-style:none;
 }
 
 .item_name{
-  width: 132px;
-  font-size: 14px;
-  padding-left:3px;
-  overflow: hidden;
-  white-space: nowrap;
+    width: 130px;
+    font-size: 14px;
+    padding-left:3px;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .drop_ship{
@@ -83,169 +86,206 @@ li{list-style:none;}
 
 .drop_item{
   /* position:absolute; */
-  height: 25px;
-  border-right-style: hidden; 
+  height: 2em;
+  border-right-style: hidden;
 }
 
 .ship_status{
-  width:330px;
-  height:256px;
-}
-
-.ship_option_name{
-  padding-left:3px;
-  width:100%;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  border-bottom-style:none;
+    width:330px;
+    height:256px;
 }
 
 .ship_option_type{
-  width:120px;
-  text-align: center;
-  border-top-style:none;
-  border-bottom-style:none;
+    width:120px;
+    text-align: center;
+    border-top-style:none;
+    border-bottom-style:none;
 }
 
 .ship_option_param{
-  width:110px;
-  text-align: center;
-  border-top-style:none;
-  border-bottom-style:none;
+    width:110px;
+    text-align: center;
+    border-top-style:none;
+    border-bottom-style:none;
 }
 
 .ship_option_button{
-  width:80px;
-  text-align: center;
-  border-top-style:none;
-  border-bottom-style:none;
+    width:80px;
+    text-align: center;
+    border-top-style:none;
+    border-bottom-style:none;
 }
 
 .item_size{
-  width:6px;
-  height:144px;
-  background:#BDACA0;
-  margin: 4px auto 0px;
+    width:6px;
+    height:144px;
+    background:#BDACA0;
+    margin: 4px auto 0px;
 }
 
 .reset_item{
-  color: #1BADB0;
-  font-size: 18px;
-  font-weight: bold;
-  text-shadow: 1px 1px 0px #FFF,
-  -1px 1px 0px #FFF,
-  1px -1px 0px #FFF,
-  -1px -1px 0px #FFF;
-  text-align:center;
-  cursor:pointer;
+    color: #1BADB0;
+    font-size: 18px;
+    font-weight: bold;
+    text-align:center;
+    cursor:pointer;
 }
 
 /* Loading... */
 .loader {
-  font-size: 10px;
-  margin: 50px auto;
-  text-indent: -9999em;
-  width: 11em;
-  height: 11em;
-  border-radius: 50%;
-  background: #c0c0c0;
-  background: -moz-linear-gradient(left, #c0c0c0 10%, rgba(192,192,192, 0) 42%);
-  background: -webkit-linear-gradient(left, #c0c0c0 10%, rgba(192,192,192, 0) 42%);
-  background: -o-linear-gradient(left, #c0c0c0 10%, rgba(192,192,192, 0) 42%);
-  background: -ms-linear-gradient(left, #c0c0c0 10%, rgba(192,192,192, 0) 42%);
-  background: linear-gradient(to right, #c0c0c0 10%, rgba(192,192,192, 0) 42%);
-  position: relative;
-  -webkit-animation: load3 1.4s infinite linear;
-  animation: load3 1.4s infinite linear;
-  -webkit-transform: translateZ(0);
-  -ms-transform: translateZ(0);
-  transform: translateZ(0);
-  display: none;
+    font-size: 10px;
+    margin: 50px auto;
+    text-indent: -9999em;
+    width: 11em;
+    height: 11em;
+    border-radius: 50%;
+    background: #c0c0c0;
+    background: -moz-linear-gradient(left, #c0c0c0 10%, rgba(192,192,192, 0) 42%);
+    background: -webkit-linear-gradient(left, #c0c0c0 10%, rgba(192,192,192, 0) 42%);
+    background: -o-linear-gradient(left, #c0c0c0 10%, rgba(192,192,192, 0) 42%);
+    background: -ms-linear-gradient(left, #c0c0c0 10%, rgba(192,192,192, 0) 42%);
+    background: linear-gradient(to right, #c0c0c0 10%, rgba(192,192,192, 0) 42%);
+    position: relative;
+    -webkit-animation: load3 1.4s infinite linear;
+    animation: load3 1.4s infinite linear;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+    display: none;
 }
 .loader:before {
-  width: 50%;
-  height: 50%;
-  background: #c0c0c0;
-  border-radius: 100% 0 0 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  content: '';
+    width: 50%;
+    height: 50%;
+    background: #c0c0c0;
+    border-radius: 100% 0 0 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '';
 }
 .loader:after {
-  background: #fafaff;
-  width: 75%;
-  height: 75%;
-  border-radius: 50%;
-  content: '';
-  margin: auto;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
+    background: #fafaff;
+    width: 75%;
+    height: 75%;
+    border-radius: 50%;
+    content: '';
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
 }
 @-webkit-keyframes load3 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
 }
 @keyframes load3 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
 }
-
+/* 全装備解除 */
 .arrow_box{
-  position:absolute;
-  width:54px;
-  height:10px;
-  background:#F7F7F7;
-  padding:0px 0px 3px;
-  text-align:center;
-  border:1px solid #1FC1C3;
-  color:#1FC1C3;
-  font-size:8px;
-  font-weight:bold;
-  z-index: 1;
+    position:absolute;
+    width:54px;
+    height:10px;
+    background:#F7F7F7;
+    padding:0px 0px 3px;
+    text-align:center;
+    border:1px solid #1FC1C3;
+    color:#1FC1C3;
+    font-size:8px;
+    font-weight:bold;
+    z-index: 1;
 }
 .arrow_box:after,.arrow_box:before{
-  border: solid transparent;
-  content:'';
-  height:0;
-  width:0;
-  pointer-events:none;
-  position:absolute;
-  bottom:100%;
-  left:21%;
+    border: solid transparent;
+    content:'';
+    height:0;
+    width:0;
+    pointer-events:none;
+    position:absolute;
+    bottom:100%;
+    left:21%;
 }
 .arrow_box:after{
-  border-color: rgba(247, 247, 247, 0);
-  border-top-width:5px;
-  border-bottom-width:5px;
-  border-left-width:5px;
-  border-right-width:5px;
-  margin-left: -5px;
-  border-bottom-color:#F7F7F7;
+    border-color: rgba(247, 247, 247, 0);
+    border-top-width:5px;
+    border-bottom-width:5px;
+    border-left-width:5px;
+    border-right-width:5px;
+    margin-left: -5px;
+    border-bottom-color:#F7F7F7;
 }
 .arrow_box:before{
-  border-color: rgba(31, 193, 195, 0);
-  border-top-width:6px;
-  border-bottom-width:6px;
-  border-left-width:6px;
-  border-right-width:6px;
-  margin-left: -6px;
-  margin-bottom: 1px;
-  border-bottom-color:#1FC1C3;
+    border-color: rgba(31, 193, 195, 0);
+    border-top-width:6px;
+    border-bottom-width:6px;
+    border-left-width:6px;
+    border-right-width:6px;
+    margin-left: -6px;
+    margin-bottom: 1px;
+    border-bottom-color:#1FC1C3;
+}
+/* 装備性能 */
+.arrow_box2{
+    position:absolute;
+    width:54px;
+    height:10px;
+    background:#F7F7F7;
+    padding:0px 0px 3px;
+    text-align:center;
+    border:1px solid #1FC1C3;
+    color:#1FC1C3;
+    font-size:8px;
+    font-weight:bold;
+    z-index: 1;
+}
+.arrow_box2:after,.arrow_box2:before{
+    border: solid transparent;
+    content:'';
+    height:0;
+    width:0;
+    pointer-events:none;
+    position:absolute;
+    bottom:100%;
+    left:21%;
+}
+.arrow_box2:after{
+    border-color: rgba(247, 247, 247, 0);
+    border-top-width:5px;
+    border-bottom-width:5px;
+    border-left-width:5px;
+    border-right-width:5px;
+    margin-left: -5px;
+    border-bottom-color:#F7F7F7;
+}
+.arrow_box2:before{
+    border-color: rgba(31, 193, 195, 0);
+    border-top-width:6px;
+    border-bottom-width:6px;
+    border-left-width:6px;
+    border-right-width:6px;
+    margin-left: -6px;
+    margin-bottom: 1px;
+    border-bottom-color:#1FC1C3;
+}
+
+#sidebar {
+  position: relative;
+  height: 100%;
+  overflow: auto;
+  background: #424246;
 }
