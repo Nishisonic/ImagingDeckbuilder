@@ -456,15 +456,15 @@ function dispStatus(idx) {
 }
 
 function changeShipLv(shipIdx, val) {
-    fleet_data[selectTabIdx][shipIdx].ship.lv = val;
+    fleet_data[selectTabIdx][shipIdx].lv = val;
 }
 
 function changeItemAlv(shipIdx, itemIdx, val) {
-    fleet_data[selectTabIdx][shipIdx].ship.get("items")[itemIdx].alv = Number(val);
+    fleet_data[selectTabIdx][shipIdx].items[itemIdx].alv = Number(val);
 }
 
 function changeItemLv(shipIdx, itemIdx, val) {
-    fleet_data[selectTabIdx][shipIdx].ship.get("items")[itemIdx].lv = Number(val);
+    fleet_data[selectTabIdx][shipIdx].items[itemIdx].lv = Number(val);
 }
 
 // 変更必要なし
@@ -479,9 +479,9 @@ function removeShip(shipIdx) {
 // 変更必要なし
 function removeItems(shipIdx) {
     let fleet = fleet_data[selectTabIdx];
-    if (!(shipIdx in fleet && itemIdx in fleet[shipIdx].ship.get("items"))) return;
+    if (!(shipIdx in fleet && itemIdx in fleet[shipIdx].items)) return;
     for (let itemIdx = 1; itemIdx <= 5; itemIdx++) {
-        delete fleet[shipIdx].ship.get("items")[itemIdx];
+        delete fleet[shipIdx].items[itemIdx];
     }
     formatFleetData(selectTabIdx);
     dispStatus(selectTabIdx);
@@ -489,8 +489,8 @@ function removeItems(shipIdx) {
 
 function removeItem(shipIdx, itemIdx) {
     let fleet = fleet_data[selectTabIdx];
-    if (!(shipIdx in fleet && itemIdx in fleet[shipIdx].ship.get("items"))) return;
-    delete fleet[shipIdx].ship.get("items")[itemIdx];
+    if (!(shipIdx in fleet && itemIdx in fleet[shipIdx].items)) return;
+    delete fleet[shipIdx].items[itemIdx];
     formatFleetData(selectTabIdx);
     dispStatus(selectTabIdx);
 }
@@ -506,7 +506,7 @@ function swapShip(a, b) {
 
 function swapItem(shipIdx, a, b) {
     if (!(selectTabIdx in fleet_data && shipIdx in fleet_data[selectTabIdx])) return;
-    let items = fleet_data[selectTabIdx][shipIdx].ship.get("items");
+    let items = fleet_data[selectTabIdx][shipIdx].items;
     items[b] = [items[a], items[a] = items[b]][0];
     formatFleetData(selectTabIdx);
     dispStatus(selectTabIdx);
