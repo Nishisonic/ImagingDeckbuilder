@@ -230,6 +230,7 @@ function loadPredeck(deckBuilderMode) {
                 $("#loader" + i).show();
                 formatFleetData(i, deckBuilderMode);
                 dispOrganizationImage(i);
+                // dispOrganizationImage2(i);
                 if ($('#fleetTab' + i).hasClass('select')) {
                     dispStatus(i);
                 }

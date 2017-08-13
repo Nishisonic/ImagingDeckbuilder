@@ -293,6 +293,7 @@ function dispOrganizationImage(fleetIdx){
     }
 }
 
+
 function composite(fileAry,width,height,callback){
     let numFiles = fileAry.length;
     let loadedCounter = 0;
@@ -333,4 +334,67 @@ function composite(fileAry,width,height,callback){
         call(canvas);
     }
     loadImgs(callback);
+}
+
+function composite2(fileAry,width,height,callback){
+    let numFiles = fileAry.length;
+    let loadedCounter = 0;
+    let imgAry = [];
+    let promiseArray = fileAry.map(file => {
+        return new Promise(function(resolve,reject){
+            let image = new Image();
+            image.crossOrigin = 'anonymous';
+            let imgData = {img:image,x:0,y:0};
+            imgData.x = file.x;
+            imgData.y = file.y;
+            imgData.img.src = file.src;
+            imgData.img.addEventListener('load', function(){
+                imgAry.push(imgData);
+                resolve();
+            }, false);
+        });
+    });
+
+    Promise.all(promiseArray).then(() => {
+
+    });
+
+
+    let loadImgs = function(call){
+        if(fileAry.length === 0) return;
+        let image = new Image();
+        image.crossOrigin = 'anonymous';
+        let imgData = {img:image,x:0,y:0};
+
+        imgData.img.addEventListener('load', function(){
+            loadedCounter++;
+            imgAry.push(imgData);
+            if(numFiles == loadedCounter){
+                display(call); // 画像をすべて読み込んだら描画
+            } else {
+                loadImgs(call);
+            }
+        }, false);
+
+        imgData.img.src = fileAry[imgAry.length].src;
+        imgData.x = fileAry[imgAry.length].x;
+        imgData.y = fileAry[imgAry.length].y;
+    }
+
+    let display = function(call){
+        let canvas = document.createElement('canvas');
+        let ctx = canvas.getContext('2d');
+        canvas.width = width;
+        canvas.height = height;
+        for (let i in imgAry){
+            let imgSrc = imgAry[i].img.src;
+            // canvasの全面に描画
+            ctx.drawImage(imgAry[i].img, imgAry[i].x, imgAry[i].y);
+            imgAry[i] = null;
+        }
+        call(canvas);
+    }
+    loadImgs(callback);
+
+
 }

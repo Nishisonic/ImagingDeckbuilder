@@ -56,6 +56,43 @@ class ShipDto {
         // アイテムステータス合計[雑]
         this.itemParam = (() => {
             let val = ItemParameters.EMPTY;
+            Object.keys(items).map(idx => items[idx]).forEach((item) => {
+                // val.id += item.id;
+                // val.sortno += item.sortno;
+                // val.name += item.name;
+                // val.type0 += item.type0;
+                // val.type1 += item.type1;
+                // val.type2 += item.type2;
+                // val.type3 += item.type3;
+                // val.type4 += item.type4;
+                val.taik += item.taik;
+                val.souk += item.souk;
+                val.houg += item.houg;
+                val.raig += item.raig;
+                // val.soku += item.soku;
+                val.baku += item.baku;
+                val.tyku += item.tyku;
+                val.tais += item.tais;
+                val.atap += item.atap;
+                val.houm += item.houm;
+                val.raim += item.raim;
+                val.houk += item.houk;
+                val.raik += item.raik;
+                val.bakk += item.bakk;
+                val.saku += item.saku;
+                val.sakb += item.sakb;
+                val.luck += item.luck;
+                if(val.leng < item.leng) val.leng = item.leng;
+                // val.rare += item.rare;
+                // val.broken0 += item.broken0;
+                // val.broken1 += item.broken1;
+                // val.broken2 += item.broken2;
+                // val.broken3 += item.broken3;
+                // val.info += item.info;
+                // val.usebull += item.usebull;
+                // val.cost += item.cost;
+                // val.distance += item.distance;
+            });
             return val;
         })();
     }
