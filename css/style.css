@@ -289,35 +289,7 @@ li{list-style:none;}
     background: #424246;
 }
 
-.accordion {
-    /* min-width: 300px; */
-    margin: 0 auto;
-    padding: 10px;
-}
-.accordion .ac-content {
-    margin: 0 10px;
-}
-.accordion input {
-    display: none;
-}
-.accordion label {
-    display: block;
-    background: #9fb7d4;
-    cursor: pointer;
-    padding: 10px;
-    border-bottom: 1px solid #fff;
-}
-.accordion label:hover {
-    background: #ccc;
-}
-.accordion .ac-cont {
-    transition: 0.2s;
-    height: 0;
-    overflow: hidden;
-    background: #ddd;
-    padding: 0 10px;
-}
-.accordion input:checked + .ac-cont {
-    height: auto;
-    padding: 10px;
+@keyframes anime1 {
+    0% {width: 300px;}
+    100% {width: 600px;}
 }

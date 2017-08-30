@@ -182,7 +182,7 @@ function iniStatusOption() {
     $("#sidebar").simplerSidebar({
         selectors: {
             trigger: ".select_item",
-            quitter: ".flex"
+            quitter: ".flex",
         },
         events: {
             on: {
@@ -190,23 +190,50 @@ function iniStatusOption() {
                     duration: 100,
                     open: function () {
                         // 装備選択レイアウト作成
-                        $("#sidebar_content").append('<div style="color:#1FC1C3; padding-top:5px; padding-bottom:50px; text-align:center;">装備選択</div>');
-                        for (let id in ITEM_TYPE3_DATA) {
-                            $("#sidebar_content").append('<div class="ac-content" style="margin:3px; border:1px solid black; color:#FFF; cursor:pointer; height:36px;">' +
-                                '<img src="' + itemiconAry[id] + '" style="left:10px; position: relative; top: 50%; transform: translateY(-50%);"></img>' +
-                                '<span style="position: relative; top:-5px; left:18px;">' + ITEM_TYPE3_DATA[id] + '</span>' +
+                        $("#itemicon_content").append('<div style="color:#1FC1C3; padding-top:5px; padding-bottom:50px; text-align:center;">装備選択</div>');
+                        for (const iconid in ITEM_TYPE3_DATA) {
+                            $('#itemicon_content').css({'width':'283px'});
+                            $("#itemicon_content").append('<div id="itemicon_content' + iconid + '" class="itemicon_content" style="margin:3px; border:1px solid black; color:#FFF; cursor:pointer; height:36px;">' +
+                                '<img src="' + itemiconAry[iconid] + '" style="left:10px; position: relative; top: 50%; transform: translateY(-50%);"></img>' +
+                                '<span style="position: relative; top:-5px; left:18px;">' + ITEM_TYPE3_DATA[iconid] + '</span>' +
                                 '</div>');
+                            $('#itemicon_content' + iconid).click(function () {
+                                if($('#sidebar').css('width').slice(0,-2) < 300){
+                                    // $('#sidebar').css('width','600px');
+                                    $('#sidebar').css('animation','anime1 1s ease -2s 1 alternate');
+                                    $('#itemicon_content').css({'float':'right'});
+                                    const _iconid = $(this)[0].id.match(/\d/g).join('');
+                                    for (const id in ITEM_DATA) {
+                                        if (_iconid == ITEM_DATA[id].type3) {
+                                        }
+                                    }
+                                    $('#item_content').css({'width':'283px','float':'left'});
+                                    // $('#item_content').append('<div id="item_content' + iconid + '" class="item_content" style="margin:3px; border:1px solid black; color:#FFF; cursor:pointer; height:36px;">' +
+                                    //     '<img src="' + itemiconAry[iconid] + '" style="left:10px; position: relative; top: 50%; transform: translateY(-50%);"></img>' +
+                                    //     '<span style="position: relative; top:-5px; left:18px;">' + ITEM_TYPE3_DATA[iconid] + '</span>' +
+                                    // '</div>');
+                                } else {
+                                    $('#sidebar').css('width','300px');
+                                }
+                            });
                         }
-                        $("#sidebar_content").append('<div style="margin:3px; border:1px solid black; text-align:center; color:#FFF; cursor:pointer; height:36px;"><span style="position: relative; top:5px;">装備を外す</span></div>');
+                        $("#itemicon_content").append('<div style="margin:3px; border:1px solid black; text-align:center; color:#FFF; cursor:pointer; height:36px;"><span style="position: relative; top:5px;">装備を外す</span></div>');
                     },
                     close: function () {
-                        $("#sidebar_content").empty();
-                    }
-                }
+                        $('#sidebar').css('width','300px');
+                        $('#item_content').empty();
+                        $("#itemicon_content").empty();
+                        $('#itemicon_content').css('float','left');
+                    },
+                },
             },
             callbacks: {
                 animation: {
-                    freezePage: false
+                    close: function () {
+                        // なぜか17px残るため、無理やりずらす
+                        $("#sidebar").css('right', '-300px');
+                    },
+                    freezePage: false,
                 }
             }
         }
@@ -223,7 +250,7 @@ function setPresetDeck(str) {
 
 // このメソッドを発火で大体どうにか出来るようにする
 function loadPredeck(deckBuilderMode) {
-    iniLoad().then(function () {
+    iniLoad().then(() => {
         for (let i = 1; i <= 4; i++) {
             if (fleet_data[i] != null && Object.keys(fleet_data[i]).length > 0) {
                 $("#orgImg" + i).attr("src", "");
@@ -480,7 +507,7 @@ function removeShip(shipIdx) {
 // 変更必要なし
 function removeItems(shipIdx) {
     let fleet = fleet_data[selectTabIdx];
-    if (!(shipIdx in fleet && itemIdx in fleet[shipIdx].items)) return;
+    if (!(shipIdx in fleet)) return;
     for (let itemIdx = 1; itemIdx <= 5; itemIdx++) {
         delete fleet[shipIdx].items[itemIdx];
     }

@@ -56,7 +56,7 @@ class ShipDto {
         // アイテムステータス合計[雑]
         this.itemParam = (() => {
             let val = ItemParameters.EMPTY;
-            Object.keys(items).map(idx => items[idx]).forEach((item) => {
+            Object.keys(items).map(idx => items[idx]).forEach(item => {
                 // val.id += item.id;
                 // val.sortno += item.sortno;
                 // val.name += item.name;
