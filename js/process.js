@@ -179,7 +179,8 @@ function iniStatusOption() {
         }
     }
 
-    $("#sidebar").simplerSidebar({
+    let itemiconContent = null;
+    $("#itemicon_sidebar").simplerSidebar({
         selectors: {
             trigger: ".select_item",
             quitter: ".flex",
@@ -189,39 +190,54 @@ function iniStatusOption() {
                 animation: {
                     duration: 100,
                     open: function () {
+                        $("#itemicon_sidebar").css('z-index', 3001);
                         // 装備選択レイアウト作成
-                        $("#itemicon_content").append('<div style="color:#1FC1C3; padding-top:5px; padding-bottom:50px; text-align:center;">装備選択</div>');
-                        for (const iconid in ITEM_TYPE3_DATA) {
-                            $('#itemicon_content').css({'width':'283px'});
+                        $("#itemicon_content").append(
+                            '<div style="color:#1FC1C3; top:0px; padding-bottom:10px; position:fixed; background: #424246; z-index:3002; width:283px; border-bottom:solid 3px #1FC1C3;">' +
+                                '<div style="padding-top:3px; text-align:center;">装備選択</div>' +
+                                '<div id="select_itemicon_content" style="margin:3px; border:1px solid black; color:#FFF; cursor:pointer; height:36px;">' +
+                                '<img src="" style="left:10px; position: relative; top: 50%; transform: translateY(-50%);"></img>' +
+                                '<span style="position: relative; top:-5px; left:18px;"></span>' +
+                                '</div>' +
+                            '</div>'
+                        );
+                        $('#itemicon_content').css({'width':'283px'});
+                        $("#itemicon_content").append('<div style="margin:3px; height:85px;"></div>');
+                        Object.keys(ITEM_TYPE3_DATA).forEach(iconid => {
                             $("#itemicon_content").append('<div id="itemicon_content' + iconid + '" class="itemicon_content" style="margin:3px; border:1px solid black; color:#FFF; cursor:pointer; height:36px;">' +
                                 '<img src="' + itemiconAry[iconid] + '" style="left:10px; position: relative; top: 50%; transform: translateY(-50%);"></img>' +
                                 '<span style="position: relative; top:-5px; left:18px;">' + ITEM_TYPE3_DATA[iconid] + '</span>' +
                                 '</div>');
-                            $('#itemicon_content' + iconid).click(function () {
-                                if($('#sidebar').css('width').slice(0,-2) < 300){
-                                    // $('#sidebar').css('width','600px');
-                                    $('#sidebar').css('animation','anime1 1s ease -2s 1 alternate');
-                                    $('#itemicon_content').css({'float':'right'});
-                                    const _iconid = $(this)[0].id.match(/\d/g).join('');
-                                    for (const id in ITEM_DATA) {
-                                        if (_iconid == ITEM_DATA[id].type3) {
-                                        }
-                                    }
-                                    $('#item_content').css({'width':'283px','float':'left'});
-                                    // $('#item_content').append('<div id="item_content' + iconid + '" class="item_content" style="margin:3px; border:1px solid black; color:#FFF; cursor:pointer; height:36px;">' +
-                                    //     '<img src="' + itemiconAry[iconid] + '" style="left:10px; position: relative; top: 50%; transform: translateY(-50%);"></img>' +
-                                    //     '<span style="position: relative; top:-5px; left:18px;">' + ITEM_TYPE3_DATA[iconid] + '</span>' +
-                                    // '</div>');
-                                } else {
-                                    $('#sidebar').css('width','300px');
-                                }
-                            });
-                        }
+                        })
                         $("#itemicon_content").append('<div style="margin:3px; border:1px solid black; text-align:center; color:#FFF; cursor:pointer; height:36px;"><span style="position: relative; top:5px;">装備を外す</span></div>');
+                        console.log('test')
+                        $('.itemicon_content').click(function () {
+                            const iconid = $(this)[0].id.match(/\d/g).join('');
+                            const itemList = Object.keys(ITEM_DATA).map(id => ITEM_DATA[id]).filter(item => item.type3 == iconid && item.id <= 500);
+                            // ---
+                            const tmpItemiconContent = $(this)[0];
+                            $(itemiconContent).css({'background':'#464646','color':'#FFF'});
+                            $("#select_itemicon_content").children('img').attr('src',$(tmpItemiconContent).children('img').attr('src'));
+                            $($("#select_itemicon_content").children('span')[0]).text($($(tmpItemiconContent).children('span')[0]).text());
+                            $(tmpItemiconContent).css({'background':'#FFF','color':'#000'});
+                            if(itemiconContent == tmpItemiconContent){
+                                $("#item_sidebar").animate({'right':'-620px'},200);
+                                $(itemiconContent).css({'background':'#464646','color':'#FFF'});
+                                $("#select_itemicon_content").children('img').attr('src','');
+                                $($("#select_itemicon_content").children('span')[0]).text('');
+                                itemiconContent = null;
+                            } else {
+                                itemiconContent = tmpItemiconContent;
+                                if($("#item_sidebar").css('right') == '0px'){
+                                    $("#item_sidebar").animate({'right':'-620px'},200);
+                                }
+                                $("#item_sidebar").animate({'right':'0px'},250);
+                            }
+                        });
                     },
                     close: function () {
-                        $('#sidebar').css('width','300px');
-                        $('#item_content').empty();
+                        $("#item_sidebar").animate({'right':'-620px'});
+                        $('#itemicon_sidebar').css('width','300px');
                         $("#itemicon_content").empty();
                         $('#itemicon_content').css('float','left');
                     },
@@ -230,14 +246,33 @@ function iniStatusOption() {
             callbacks: {
                 animation: {
                     close: function () {
-                        // なぜか17px残るため、無理やりずらす
-                        $("#sidebar").css('right', '-300px');
+                        $("#itemicon_sidebar").animate({'right':'-320px'},20);
                     },
                     freezePage: false,
                 }
             }
         }
     });
+
+    $("#item_sidebar").simplerSidebar({
+        selectors: {
+        },
+        sidebar: {
+            width: 600
+        },
+        mask: {
+            display: false
+        },
+        events: {
+            callbacks: {
+                animation: {
+                    freezePage: false,
+                }
+            }
+        }
+    });
+    $("#itemicon_sidebar").css('right', '-320px');
+    $("#item_sidebar").css('right', '-620px');
 }
 
 function setPresetDeck(str) {

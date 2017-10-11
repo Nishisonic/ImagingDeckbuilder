@@ -282,14 +282,13 @@ li{list-style:none;}
     border-bottom-color:#1FC1C3;
 }
 
-#sidebar {
+#item_sidebar,#itemicon_sidebar {
     position: relative;
     height: 100%;
     overflow: auto;
     background: #424246;
-}
-
-@keyframes anime1 {
-    0% {width: 300px;}
-    100% {width: 600px;}
+    border-left: solid 3px #1FC1C3;
+    border-radius: 10px;        /* CSS3草案 */
+    -webkit-border-radius: 10px;    /* Safari,Google Chrome用 */
+    -moz-border-radius: 10px;   /* Firefox用 */
 }
